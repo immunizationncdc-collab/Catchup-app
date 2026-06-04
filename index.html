@@ -4,94 +4,61 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<title>حاسبة التطعيمات الفائتة – ليبيا 2026 v5</title>
-<meta name="description" content="حساب جدول التطعيمات الفائتة للأطفال – المركز الوطني لمكافحة الأمراض"/>
+<title>حاسبة التطعيمات الفائتة - ليبيا 2026</title>
 <meta name="theme-color" content="#1a3a6b"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="تطعيمات فائتة"/>
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABmJLR0QA/wD/AP+gvaeTAAATQklEQVR4nO3de1xUdd4H8M85c2YYZmBgEke8IIJJIqgo6CrqU+lSqW2t2a7bltntVZmabfVsr/XZMtueeraym1tuW1u5lbXdrM1yXTPNNE0lJMgLKCgqIQoMA8wMcznn+QNvOKAwF37nzO/7/i+gmY9wPnN+55zf+R2hFPEKCOGUyDoAISxRAQjXqACEa1QAwjUqAOEaFYBwjQpAuEYFIFyjAhCuUQEI16gAhGtUAMI1KgDhGhWAcI0KQLhGBSBcowIQrlEBCNeoAIRrVADCNSoA4RoVgHCNCkC4RgUgXKMCEK5RAQjXqACEa1QAwjUqAOGa0D//nusVCB+wDkJID5P98PcVAfES1kkIYUDUKVK+CChUAMIlQVCyRQXKENZBCGFBUTBcBNCLdRBCmBCQIUIQ4lnnIIQRqwQFcaxTRBtjjB5pKTakD+iN9BQb0gfa0CcpAYkWM6wJZhgNesQYJMQaDQAAl9uDVo8Pbo8XDY0tsDtacOxEIw5U1aLycC0qjhxHRVUtWj1exv+yqJMoATCxTqFlgiBgSGofjB+dgfGjLkbWkAHoZ7NCFIUuv0as0XC6DMlJCR3+jCwrqK5tQGnZEWwtKsfWonKUH6wJy7+BY/FCv/x59JTIbkqyxqNgQvbpjT7JymYUeaKhCd9+31aGdZtLUGdvZpJDy6gAXWTQS5g0ZihmFOThiknDoZd0rCO14/fL2LprP1at3YE1m4rhcntYR9IEKsAF5GSmYtb0cZh6aQ4S4mNZx+mSxiYXvthYhH9+vg3Fe6tYx1E1KkAn8oan4+4bpmBKfhbrKCEpLK3E8pXrsf7bUtZRVIkKcI4JuRl44PbpGDUslXWUsPqx/AiWv/Mlvvi6GIpCf/JTqAAn5WanYcnCmcgaMoB1lIgq2XcYi1/4CEW7D7KOogrcFyDRYsLCOVfh5hmTunXqUssURcEn6wrx+EufoL6R7zNH3BZAEATMKMjDH+f9EtYEM+s4TNgdTry4Yi1WrNoEWeZyM+CzAP37WPHCwzcjNzuNdRRV2FlSgYV/egvVtQ2so/Q47u4Im5KfjdWvPkgb/1nyhqdjzeu/x7RLc1hH6XG6+JSxj7IO0RMknYgFc67E47/71elpB+SMGIMe0y4biUSLGd8WlXEzJOJiCNTXloiXl9yKnMzoOrUZKUW7D+GexW+g5riddZSIi/oh0MWpffDRX+6jjb8bRg1LxSfLf4eh6f1YR4m4qC5ATmYq3n/xXvS1JbKOojl9khLw7vPzo/5YKWoLMCE3A28vvYfbU5zhkGgx4a1n5uLyccNYR4mYqCzAtT/PxZtP3Q2zKYZ1FM2LNRrwyuO34xeTR7OOEhFRV4DJ44bhmT/cCEkXdf80ZvSSDksX3RiVe4Ko2kpyMlOxbPEttPFHgF7S4eUlt0bdMUHUbCkZg5Lxxp/vhCmWzvFHijFGj9eeuAMXp/ZhHSVsoqIA/WxWvPn03Ui00AFvpCVazPjH03OR3Ds6zqxpvgCSpMOyxXPQN0r+IFrQ15aI5Y/dCr1eXbeFBkPzBfjDXddgdNYg1jG4k5OZigdun846Rsg0XYDJ44bh1uv/i3UMbt0563IUTBjOOkZINFuAvrZELF10IwSBj5tY1EgQBDz10A3o38fKOkrQNFkAURSw7JE5dNCrAokWE55ddJNmP4g0WYDfTB8fdeejtWzsyMG4/qqxrGMERXMFSLSY8OAd2j/4ijaL5l6jyXlXmivAornXavIXHe0SLWY8qMGzQpoqQG52mmZ3tTz4zdXjMWrYINYxukUzBRAEAUsWztTswRYPRFHA4gXXsY7RLZopwOTxWVG/aFU0GJk5EJeOzWQdo8s0U4C5v53COgLponvnXMk6QpdpogD5ozPotKeGjM4ahJ+NHMw6RpdoogDzZxewjkC6af7sK1hH6BLVFyAnMxXjR9GTXLVmYt4lGDl0IOsYF6T6AsyaPo51BBKkX037GesIF6TqAsQY9JjK4XJ90WL6ZaNg0EusY5yXqgtQMDFbM48lIoESLSbVP2FH1QWYUTCGdQQSohkFeawjnJdqC9ArMQ6TxlzCOgYJ0WXjhql67pZqC3DFRPU9ipR0n17S4cpJI1jH6JRqCzB+dAbrCCRM1Dw1QpUFEAQB40ddzDoGCZMJuRmQVLo3V2UBMgYlI8kazzoGCZN4sxHZGeqcyKjKAoyjK79RZ8xwdc4NUmUBaPgTfXKzB7GO0KGIXabTCX7ECK0QhDNPYFIUAW7FCFk5f++yh6SEJYOr1YeK6iY4mj1heT21knQCkpPMSLGp93Rj5uD+rCN0KCIF0Al+DDZWQhL8Ad/zKhIq3Gnwd1ICY4w+5Ce6NLu8WLqyGJ9+cxBuT2CGaJWRkoBFN4/G2Cwb6ygBBiRfhBiDHq0eL+so7USkAEbR0+HGDwB6wQej2IoWf8dTHNJSbCE9sb3J6cXNj61HRXUTrp6YhnFZNsQY1D0fJRyO1Dbjw/X7cfv/bcTSBeNxxdjw7EXDRRQFDOqfhH2VP7GO0g6TLSM7qQF+wYkKezzq3e2XM09PCe3T67n3ilFR3YRnFkxAXqb6PgkjZUymDVPHD8T9z2/G4td2YtSQJPS2qmseVfpAGx8FcMkx8CoS9IIv4HuiKEKn00ES/MiwNmLnsV7wyWeGQ4NDKICr1YdPNh3E1RPTTm/89U2tKC6vg8/XtaGQ3y+jpt6F/r3DP54WdQJGD+kNqyUyj24yGiQ8fNsY3PjoOrz62R4sulldjzUK9cMtEiJSAFkRccCdBqPghiAo6B3rhs3kbntDSTq9soNOVGDW+9HYeqYAaSm9g37fiuomuD1+jMs6s/E/8WYh3J7AInaaXVZQ1+iOyKdnY7MH1WObMXvq0LC/9il9k8zIvcSGnXuOR+w9gqXGAkTsNKisiHDKJrT4zZBFI/R6PfR6fcCyJorS/jndoTx4welqO8AyG/UAgOKyE93a+IPR2NzarZ//bndtl37uhN2FfYeCe1B1YrwBTS3qO/PVJymBdYQAqjs6TLSYwvZartbIbvzBcPdAplgDMGpwHMora05/TZJ0GNivF3QMn59mVeFixiosgPp+SVqT3V8Po0GP3fuPtvt6U4sLIxjep6vGadGqK4DJSA+5C1Vnv0JHizti71n4w354vX5YLCYkxJuQEG+G2WTE2SPeWBX+bZkXoGB0L8TFxZ3+7w/eewfBrn7Y6pVx7dBWOJvqAAR/MB2tnE43fiyrCvvr6vU6+GUFDY3NaGhsPv11SdIh3hx7uhRGgwGCIAQc97HEvACWWB3iTWdiOByNIb2eLQ6o2vMtJuRF7kyLVsmKAo83/McgHq8PkhR4bOHz+QNKsfShWThaY0dVTR2qfqrH4eo61NQ1QTAmQRB18LvqoPi7d2IhFMwLEAmyzM/0B7UQEPzVe525LwR92yhAlEzwNFYAihyuaOfFvACOFh9k3ZlPpZTkXiENgaqOtyI/Jz9M6aKLKAgRWaZEL+lgdzgDvt7REGjMzEfaD4EEAQZr8lkhJQiSEYo38PUigXkB1u2qh8NzZhdZvPpeWOKCuwi1Y3ctlj2+AQXT1HfBRQ1MJiOyMiJzFqjwhwO4yBqPhHgTLKcPgttf8bY7nAHjf0EIHDoJgg49dZTAvADncro9QReAtHF5FMQaAnej8bGRmYIBALkjLnzDi8sdeHFOkf2A7APEk5uiACj+nruIp7oCNDS2IFmFVwy1pOSwH4rXiZumnllYIEavR2r/XgxTAfVnHQyfzeeqhWTuBwDwuxr4PghuaGwJ22vFnpwSoSYGfeRvDm/1KSgub8YTC9R1E0pnf1u51QGP1wkBIhS5Z6dwROy6uE7wwyQ6Yda1QJTd8Hq98Hq9HYwB2++qa+uCPw0aZ2q70GI/OQ8mb6gNCebIXnxJiOvesCJnSFKXfi4pMRaXpAY3L6rZ5UWcSX3lr61zdP5N2dfjGz/QU3eEyUDzyb2fKIqwWCwnL4gIcPnafyJWVHVtslhHhqRYkBBnwOrNB3H56P6IN0l4aHYuCvfVwtHFyWGyX8Exuwt9e4VvThLQdkNIjEGHvIzIXqBze3woLjuOybnq+vQHgANVx1hHCNDjd4TJsgy/3w9ZMOBgYxw8/vY7oYrDwRdA0olY+OsReOz1nfjwq/24fvLFsJj1uHy0+jaGSJAVBc++WwyH04tZBepbWSOUv22kMDkGKD1h7fSWyAMh/pJmTRmMLT/U4Ln3irGr/AR+PmYgzLGqO9QJu2P1Tnz2TSVKK+qx4PpsjBh8EetIAULZu0dKj98R5lMkuOXOx80HjxyHLCtB3xcsCMDzC/Pxt0934801ZdhQePTC/1OUGGAz4+n54zA9P5V1lACyrOBQdR3rGAF65I6wUxRFQKti7HRFCABwt3rxU60d/ZOtQb+/Tidg7nVZuO0XQ1FZ3YQGR8+dVmNB0gmwXWRCanLchX+YkSM19apbEQKI4BBIVkQ4leAOJEvKDodUgFNi9DoMDfJMCgmvPQfUuSdW5cpw23btZx2BhNnOkgrWETqkygJs/b6MdQQSZjtLKllH6JAqC1B+6BiO1zexjkHCpKnFjdLyI6xjdEiVBVAUBVuLylnHIGGyeee+Lq/L1NNUWQAAVIAosvG7PawjdEq1BVi3uQRelX5qkK7zeH1Yt6WEdYxOqbYAdfZmbNq+l3UMEqKN2/aEdYZvuKm2AACwat1O1hFIiFat28E6wnmpugBfbilFY5OLdQwSJLvDia+27mYd47xUXYBWjxdfbCxiHYMEafWGoogswxJOqi4AAPzz822sI5Agvf+F+v92qi9A8d4qbCmkK8Nas2n7XpTsO8w6xgWpvgAA8NLb61hHIN30l7f/wzpCl2iiAFuLylFYqs65JCRQYWkldvygzslv59JEAQDgZdoLaMYLK/7NOkKXaaYAG77bo4kxJe+Kdh/CNzv2sY7RZZopgKIoePi5DyDL6llam7QnywoeW/Yx6xjdopkCAG1nhD5c8x3rGKQTKz/7Frv2HGIdo1s0VQAAePKVf6l6bgmv7I4WLP3756xjdJvmCmB3OPHUq6tZxyDn+N+XP+1wiXS101wBgLYrjGq9x5RH23btx0dr1T3prTOaLIAsK1jw2D9oKKQCdkcLHnjiHVU996s7NFkAAKg5bscDT2r3Fx8NFEXBf//5XVTXNrCOEjTNFgAANmzbjdfe38g6Brf+unI9vtxSyjpGSDRdAAB46m+f0TQJBop2H8Kzb6xhHSNkmi+Azy9j/pIV+KnWzjoKN47WNODuh19X7UoP3aH5AgBtxwO/vf8l1DV0/AgeEj4NjS2Y8/u/hvQgEzWJigIAbatK37HoVbQ4o3shXJZcbg/uWPSaKh90EayoKQAA7NpzCHc9/HfV34anRV6fH3MfeQPf/xhdx1tRVQAA2FJYhgefXElrCoWR1+fH/U+8ja+3q3eBq2BFXQEA4LOvvsetD72CZqebdRTNc7o8uPN/XsPqr6JzcYKoLADQtie46f6XUW+nA+Ng2R0tmP3gclUvbRiqqC0A0DZ9etbCZag+pt0rlawcrWnAzHkvRN2Y/1xRXQAA2H/oGGbOfwHf/3iQdRTNKCytxHXznlflUx3DTRefMvZR1iEirdnpxsdrt0NWFIwdMTjg4dykjaIoWPHxN1j4+FtoauFjRT6hX/48rmaTTcjNwPN/nI0kazzrKKrS0NiCB558Bxu2qXspw3CL+iHQubYUluGau5Zie/EB1lFUY9uu/Zh6+1PcbfwAh3uAUwRBwIyCPCyaey16WdX7eNFIsjta8OKK/2DFqk3cLjbAbQFOSYg34b5brsLsX06ETsfHDlFRFHyyrhB/emkV9zcVcV+AU3IyU/HovTMxMnMg6ygRVbT7EJa8+BGK91axjqIKVIBz5A1Px323XIUJuRmso4RVYWkllq9cj6+2/kh30Z2FCtCJvOHpuPuGKZiSn8U6SkgKSyvx3BtraIXtTlABLmDk0IH49bRxmHZZDhItJtZxusTuaMHqDbvw/hfbaDnJC6ACdJFBL2HSmKGYUZCHgonZMOgl1pHa8ftlbN21H6vW7sCaTcVwuT2sI2kCFSAI1gQzrpw0ApeOzcSE3AzEm41McjiaXdhSWIavt+/B2m9+0OTCVKwJ/fLn+cHhBbFwkSQdhmekIG94GvKy0zF0cD8MSL4Iohje6RZ+v4yjxxqw58BR7CypwM7SSpTuOwyfXw7r+3BGFvrlz7MDSGCdJJoY9BLSU2xIT7EhLaU30lJsSE5KgDXBDGuCGbExBkiSiDhT256j2emGzyfD5fagobEFDY4W1JxoROXhWlQcrkVFVS0qjxynO93Cr0kC0AgqQFh5vD7srajG3opq1lHI+TWJEEDriRBeNYkAtPM4D0LCq04EoO217QgJXpmoyChhnYIQJhRln6hI4mYAdC6NcEeBsE/Abbl0IYxwiy6AEa5RAQjXqACEa1QAwjUqAOEaFYBwjQpAuEYFIFyjAhCuUQEI16gAhGtUAMI1KgDhGhWAcI0KQLhGBSBcowIQrlEBCNeoAIRrVADCNSoA4RoVgHCNCkC4RgUgXKMCEK5RAQjXqACEa1QAwjUqAOHa/wPjWOV30e97JwAAAABJRU5ErkJggg=="/>
-<link rel="icon" type="image/png" href="data:image/png;base64,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"/>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --db:#1a3a6b;--mb:#2354a4;--lb:#d6e4f7;--llb:#eef3fb;
-  --gr:#006233;--lgr:#e8f5ee;--rd:#d4000d;--lrd:#fdecea;
+  --db:#1a3a6b;--mb:#2354a4;--llb:#eef3fb;
+  --gr:#006233;--lgr:#e8f5ee;--lrd:#fdecea;
   --gd:#c8a951;--lgd:#fffbf0;
-  --bg:#f0f4fb;--wh:#fff;--sh:0 2px 16px rgba(0,0,0,.09);
+  --bg:#f0f4fb;--sh:0 2px 16px rgba(0,0,0,.09);
   --r:16px;--rs:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-height:100vh;direction:rtl}
-
-#install-modal{position:fixed;inset:0;z-index:9999;background:rgba(10,20,50,0.88);display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .3s ease}
-#install-modal.hidden{display:none}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-box{background:#fff;border-radius:24px;padding:28px 22px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:popUp .35s cubic-bezier(.34,1.56,.64,1)}
-@keyframes popUp{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-.modal-logo{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--db),var(--mb));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 8px 24px rgba(26,58,107,.35)}
-.modal-box h2{font-size:20px;font-weight:900;color:var(--db);margin-bottom:6px}
-.modal-box .sub{font-size:13px;color:#666;margin-bottom:18px;line-height:1.6}
-.modal-features{display:flex;flex-direction:column;gap:8px;background:var(--llb);border-radius:12px;padding:14px;margin-bottom:20px;text-align:right}
-.modal-feature{display:flex;align-items:center;gap:8px;font-size:13px;color:#333}
-.btn-install-main{width:100%;padding:15px;background:linear-gradient(135deg,var(--gr),#007a3d);color:#fff;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:16px;font-weight:900;cursor:pointer;margin-bottom:10px;box-shadow:0 4px 16px rgba(0,98,51,.35);transition:.2s}
-.btn-install-main:hover{transform:translateY(-1px)}
-.btn-skip{width:100%;padding:10px;background:none;border:1.5px solid #cdd3e0;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;color:#888;cursor:pointer}
-#ios-instructions{display:none}
-.ios-steps{text-align:right;margin-bottom:16px}
-.ios-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f0f2f8;font-size:13px;color:#333}
-.ios-step .sn{width:22px;height:22px;border-radius:50%;background:var(--db);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-
-#fab-install{position:fixed;bottom:80px;left:16px;z-index:1000;background:linear-gradient(135deg,var(--gr),#007a3d);color:#fff;border:none;border-radius:50px;padding:12px 18px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(0,98,51,.45);display:none;align-items:center;gap:8px;animation:bounce 2s infinite}
-#fab-install.show{display:flex}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-
-.hdr{background:linear-gradient(135deg,var(--db) 0%,var(--mb) 70%,#1a6b3a 100%);padding:16px;position:relative;overflow:hidden}
-.hdr::before{content:'';position:absolute;top:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04)}
-.hdr-inner{display:flex;align-items:center;gap:12px;position:relative;z-index:1}
-.hdr-ico{width:52px;height:52px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.hdr h1{font-size:17px;font-weight:900;color:#fff;line-height:1.25}
+.hdr{background:linear-gradient(135deg,var(--db) 0%,var(--mb) 70%,#1a6b3a 100%);padding:16px}
+.hdr-inner{display:flex;align-items:center;gap:12px}
+.hdr-ico{width:52px;height:52px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.hdr h1{font-size:17px;font-weight:900;color:#fff}
 .hdr p{font-size:11px;color:rgba(255,255,255,.8);margin-top:2px}
 .flag{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:10px}
 .flag div{flex:1}
 .f1{background:#d4000d}.f2{background:#000}.f3{background:#006233}
-
-.steps{display:flex;align-items:center;justify-content:center;padding:14px;background:#fff;border-bottom:1px solid #e4e8f0;gap:0}
+.steps{display:flex;align-items:center;justify-content:center;padding:14px;background:#fff;border-bottom:1px solid #e4e8f0}
 .sdot{width:30px;height:30px;border-radius:50%;background:#e0e4ef;color:#999;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:.3s}
-.sdot.active{background:var(--mb);color:#fff;box-shadow:0 0 0 4px rgba(35,84,164,.15)}
+.sdot.active{background:var(--mb);color:#fff}
 .sdot.done{background:var(--gr);color:#fff}
 .sline{height:3px;width:36px;background:#e0e4ef;transition:.3s}
 .sline.done{background:var(--gr)}
 .swrap{display:flex;flex-direction:column;align-items:center}
 .slbl{font-size:9px;color:#999;margin-top:3px}
-
 .main{padding:16px 14px 110px;max-width:620px;margin:0 auto}
-.card{background:#fff;border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--sh);animation:su .35s ease}
-@keyframes su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
 .card-title{font-size:15px;font-weight:700;color:var(--db);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .card-title .ico{width:30px;height:30px;background:linear-gradient(135deg,var(--mb),var(--db));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-
 .inp-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .inp-row label{font-size:13px;font-weight:600;color:var(--db)}
 .inp-row input,.inp-row select{width:100%;padding:10px 12px;border:2px solid #e0e4ef;border-radius:var(--rs);font-family:'Cairo',sans-serif;font-size:14px;color:#1a1a2e;outline:none;transition:.2s;background:#fafbfd}
 .inp-row input:focus,.inp-row select:focus{border-color:var(--mb)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
 .vax-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .vax-item{background:var(--llb);border:2px solid transparent;border-radius:var(--rs);padding:9px 10px;cursor:pointer;transition:.2s;user-select:none;display:flex;align-items:center;gap:8px}
 .vax-item.checked{border-color:var(--gr);background:var(--lgr)}
-.vax-item .cb{width:18px;height:18px;border:2px solid #aaa;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.2s}
+.vax-item .cb{width:18px;height:18px;border:2px solid #aaa;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .vax-item.checked .cb{background:var(--gr);border-color:var(--gr)}
 .vax-item span{font-size:12px;font-weight:600;color:#2a2a4a;line-height:1.3}
 .vax-item.checked span{color:var(--gr)}
-
 .res-hdr{background:linear-gradient(135deg,var(--db),var(--mb));border-radius:var(--r);padding:16px;color:#fff;margin-bottom:12px}
 .res-hdr h2{font-size:16px;font-weight:900}
 .res-hdr p{font-size:12px;opacity:.85;margin-top:4px}
 .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .tag{background:rgba(255,255,255,.18);padding:4px 10px;border-radius:20px;font-size:11px}
-.visit-card{background:#fff;border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);overflow:hidden;animation:su .3s ease}
+.visit-card{background:#fff;border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);overflow:hidden}
 .visit-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--db)}
 .visit-num{width:28px;height:28px;border-radius:50%;background:var(--gd);color:#1a1a1a;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .visit-title{color:#fff;font-size:14px;font-weight:700}
@@ -104,53 +71,24 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 .complete-card{background:var(--lgr);border:2px solid var(--gr);border-radius:var(--r);padding:18px;text-align:center;margin-bottom:10px}
 .complete-card .big{font-size:42px;margin-bottom:8px}
 .complete-card p{font-size:14px;color:var(--gr);font-weight:700}
-
-.btn-nav-wrap{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e4e8f0;padding:10px 14px;display:flex;gap:9px;max-width:620px;margin:0 auto;left:50%;transform:translateX(-50%);box-shadow:0 -4px 18px rgba(0,0,0,.07)}
+.btn-nav-wrap{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:620px;background:#fff;border-top:1px solid #e4e8f0;padding:10px 14px;display:flex;gap:9px;box-shadow:0 -4px 18px rgba(0,0,0,.07)}
 .btn{flex:1;padding:12px;border-radius:var(--rs);border:none;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
 .btn.primary{background:linear-gradient(135deg,var(--gr),#007a3d);color:#fff}
 .btn.secondary{background:var(--bg);color:var(--db);border:1.5px solid #cdd3e0}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .btn-reset{width:100%;padding:13px;background:linear-gradient(135deg,var(--db),var(--mb));color:#fff;border:none;border-radius:var(--rs);font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px}
 .sep{height:1px;background:#e8eaf0;margin:12px 0}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px}
 </style>
 </head>
 <body>
 
-<div id="install-modal" class="hidden">
-  <div class="modal-box">
-    <div class="modal-logo">💉</div>
-    <h2>ثبّت التطبيق الآن</h2>
-    <p class="sub">حاسبة التطعيمات الفائتة<br>المركز الوطني لمكافحة الأمراض – ليبيا</p>
-    <div class="modal-features">
-      <div class="modal-feature"><span>📱</span><span>يعمل على الهاتف مثل أي تطبيق عادي</span></div>
-      <div class="modal-feature"><span>📶</span><span>يعمل بدون إنترنت بعد التثبيت</span></div>
-      <div class="modal-feature"><span>⚡</span><span>سريع وخفيف – بدون متجر تطبيقات</span></div>
-      <div class="modal-feature"><span>🔒</span><span>لا يحتاج صلاحيات أو بيانات شخصية</span></div>
-    </div>
-    <div id="android-install">
-      <button class="btn-install-main" id="btn-do-install">📲  تثبيت التطبيق الآن</button>
-      <p style="font-size:11px;color:#999;margin-top:6px;text-align:center">إذا لم يظهر زر التثبيت تلقائياً، اضغط ⋮ في المتصفح ← «إضافة إلى الشاشة الرئيسية»</p>
-    </div>
-    <div id="ios-instructions" style="display:none">
-      <p style="font-size:13px;font-weight:700;color:#1a3a6b;margin-bottom:10px;text-align:right">خطوات التثبيت على iPhone / iPad:</p>
-      <div class="ios-steps">
-        <div class="ios-step"><div class="sn">1</div><span>تأكد أنك تستخدم متصفح <strong>Safari</strong> (وليس Chrome)</span></div>
-        <div class="ios-step"><div class="sn">2</div><span>اضغط أيقونة المشاركة <strong>⬆️</strong> في أسفل الشاشة</span></div>
-        <div class="ios-step"><div class="sn">3</div><span>اختر <strong>«إضافة إلى الشاشة الرئيسية»</strong></span></div>
-        <div class="ios-step"><div class="sn">4</div><span>اضغط <strong>«إضافة»</strong> في الأعلى ✅</span></div>
-      </div>
-    </div>
-    <button class="btn-skip" id="btn-skip-install">متابعة بدون تثبيت</button>
-  </div>
-</div>
-
-<button id="fab-install" onclick="showInstallModal()" title="تثبيت التطبيق على الهاتف">📲 تثبيت</button>
-
 <div class="hdr">
   <div class="hdr-inner">
     <div class="hdr-ico">💉</div>
-    <div><h1>حاسبة التطعيمات الفائتة</h1><p>المركز الوطني لمكافحة الأمراض – ليبيا | سياسة 2026</p></div>
+    <div>
+      <h1>حاسبة التطعيمات الفائتة</h1>
+      <p>المركز الوطني لمكافحة الأمراض - ليبيا | سياسة 2026</p>
+    </div>
   </div>
   <div class="flag"><div class="f1"></div><div class="f2"></div><div class="f3"></div></div>
 </div>
@@ -166,430 +104,356 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 <div class="main" id="main"></div>
 
 <div class="btn-nav-wrap">
-  <button class="btn secondary" id="btn-back" onclick="goBack()" disabled>→ رجوع</button>
-  <button class="btn primary" id="btn-next" onclick="goNext()">التالي ←</button>
+  <button class="btn secondary" id="btn-back" onclick="goBack()" disabled>&#x2192; رجوع</button>
+  <button class="btn primary" id="btn-next" onclick="goNext()">التالي &#x2190;</button>
 </div>
 
 <script>
-// ── PWA ─────────────────────────────────────────────────────────────
-
-// !! أولاً: امسح أي Service Worker قديم فوراً لضمان تحميل النسخة الجديدة
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.getRegistrations().then(function(registrations){
-    for(var r of registrations){
-      r.unregister();
-      console.log('SW مسح:',r.scope);
-    }
-  });
-}
-// امسح الكاش القديم
-if('caches' in window){
-  caches.keys().then(function(keys){
-    keys.forEach(function(key){
-      if(key!=='catchup-v5') caches.delete(key);
-    });
-  });
-}
-
-// 1) manifest عبر data: URI (يقبله Chrome بخلاف blob:)
-(function(){
-  var m={
-    name:"حاسبة التطعيمات الفائتة – ليبيا",
-    short_name:"تطعيمات فائتة",
-    description:"حساب جدول التطعيمات الفائتة – المركز الوطني لمكافحة الأمراض",
-    id:"./",start_url:"./",scope:"./",
-    display:"standalone",
-    background_color:"#f0f4fb",theme_color:"#1a3a6b",
-    orientation:"portrait",lang:"ar",dir:"rtl",
-    icons:[
-      {src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABmJLR0QA/wD/AP+gvaeTAAAC1klEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAMBuAABHgAAAABJRU5ErkJggg==",
-       sizes:"192x192",type:"image/png",purpose:"any maskable"},
-      {src:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAABmJLR0QA/wD/AP+gvaeTAAAC1klEQVR4nO3BMQEAAADCoPVP7WsIoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAMBuAABHgAAAABJRU5ErkJggg==",
-       sizes:"512x512",type:"image/png",purpose:"any maskable"}
-    ]
-  };
-  var j=JSON.stringify(m);
-  var b64=btoa(unescape(encodeURIComponent(j)));
-  var lnk=document.createElement('link');
-  lnk.rel='manifest';
-  lnk.href='data:application/manifest+json;base64,'+b64;
-  document.head.appendChild(lnk);
-})();
-
-// 2) Service Worker عبر ملف مؤقت (Blob — fallback آمن للـ SW)
-if('serviceWorker' in navigator){
-  var swCode=[
-    "const C='catchup-v5';",
-    "self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./'])));self.skipWaiting();});",
-    "self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});",
-    "self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});"
-  ].join('\n');
-  var swBlob=new Blob([swCode],{type:'application/javascript'});
-  var swURL=URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swURL,{scope:'./'}).catch(function(){});
-}
-
-// ── INSTALL LOGIC ──────────────────────────────────────────────────
-var deferredPrompt=null;
-function isIOS(){return /iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;}
-function isAndroid(){return /android/i.test(navigator.userAgent);}
-function isStandalone(){return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}
-function isInstalled(){return isStandalone()||localStorage.getItem('pwa_ok');}
-
-function showInstallModal(){
-  if(isInstalled())return;
-  var m=document.getElementById('install-modal');
-  m.classList.remove('hidden');
-  if(isIOS()){
-    document.getElementById('android-install').style.display='none';
-    document.getElementById('ios-instructions').style.display='block';
-  } else {
-    document.getElementById('android-install').style.display='block';
-    document.getElementById('ios-instructions').style.display='none';
-  }
-}
-function hideInstallModal(){
-  document.getElementById('install-modal').classList.add('hidden');
-}
-
-// Android: الحدث الرسمي للتثبيت
-window.addEventListener('beforeinstallprompt',function(e){
-  e.preventDefault();
-  deferredPrompt=e;
-  document.getElementById('fab-install').classList.add('show');
-  if(!isInstalled()) setTimeout(showInstallModal,1200);
-});
-
-document.getElementById('btn-do-install').onclick=async function(){
-  if(deferredPrompt){
-    // تشغيل حوار التثبيت الرسمي من Chrome
-    deferredPrompt.prompt();
-    var result=await deferredPrompt.userChoice;
-    deferredPrompt=null;
-    if(result.outcome==='accepted'){
-      localStorage.setItem('pwa_ok','1');
-      document.getElementById('fab-install').classList.remove('show');
-      document.getElementById('install-modal').classList.add('hidden');
-    }
-  } else if(isIOS()){
-    // iOS: تعليمات يدوية Safari
-    document.getElementById('android-install').style.display='none';
-    document.getElementById('ios-instructions').style.display='block';
-  } else {
-    // Fallback: تعليمات يدوية
-    document.getElementById('install-modal').classList.add('hidden');
-    setTimeout(function(){
-      alert(
-        'لتثبيت التطبيق على جهازك:
-
-' +
-        '📱 Android (Chrome):
-' +
-        '   اضغط ⋮ (النقاط الثلاث) في الأعلى
-' +
-        '   ثم اختر «إضافة إلى الشاشة الرئيسية»
-
-' +
-        '🍎 iPhone/iPad:
-' +
-        '   افتح الصفحة في Safari
-' +
-        '   اضغط ⬆️ ثم «إضافة إلى الشاشة الرئيسية»'
-      );
-    },200);
-  }
-};
-
-document.getElementById('btn-skip-install').onclick=function(){
-  document.getElementById('install-modal').classList.add('hidden');
-};
-
-window.addEventListener('appinstalled',function(){
-  localStorage.setItem('pwa_ok','1');
-  document.getElementById('fab-install').classList.remove('show');
-  document.getElementById('install-modal').classList.add('hidden');
-});
-
-// iOS: عرض التعليمات عند الفتح
-window.addEventListener('load',function(){
-  if(isIOS()&&!isInstalled()){
-    setTimeout(showInstallModal,1500);
-    document.getElementById('fab-install').classList.add('show');
-  }
-});
-
-// ── VACCINE DATA ───────────────────────────────────────────────────
-const VAX=[
-  {id:"BCG",   label:"BCG – الواقي من الدرن",          sp:"birth"},
-  {id:"OPV1",  label:"OPV – شلل الأطفال الأول",        sp:"birth"},
-  {id:"HBV",   label:"HBV – التهاب الكبد الباني",      sp:"birth"},
-  {id:"HEXA1", label:"HEXA جرعة 1 (شهرين)",            sp:"m2"},
-  {id:"ROTA1", label:"ROTA جرعة 1 (شهرين)",            sp:"m2"},
-  {id:"PCV1",  label:"PCV جرعة 1 (شهرين)",             sp:"m2"},
-  {id:"HEXA2", label:"HEXA جرعة 2 (4 أشهر)",           sp:"m4"},
-  {id:"ROTA2", label:"ROTA جرعة 2 (4 أشهر)",           sp:"m4"},
-  {id:"PCV2",  label:"PCV جرعة 2 (4 أشهر)",            sp:"m4"},
-  {id:"HEXA3", label:"HEXA جرعة 3 (6 أشهر)",           sp:"m6"},
-  {id:"ROTA3", label:"ROTA جرعة 3 (6 أشهر)",           sp:"m6"},
-  {id:"MCV1",  label:"MCV – السحايا جرعة 1 (9 أشهر)",  sp:"m9"},
-  {id:"OPV2",  label:"OPV جرعة 2 (9 أشهر)",            sp:"m9"},
-  {id:"MCV2",  label:"MCV – السحايا جرعة 2 (12 شهر)",  sp:"m12"},
-  {id:"PCV3",  label:"PCV جرعة 3 (12 شهر)",            sp:"m12"},
-  {id:"MMR1",  label:"MMR جرعة 1 (12 شهر)",            sp:"m12"},
-  {id:"HAVA",  label:"HAV – التهاب الكبد الألفي",       sp:"m15"},
-  {id:"CBOX1", label:"Chickenpox جرعة 1 (15 شهر)",     sp:"m15"},
-  {id:"PENTA", label:"PENTA – الخماسي (18 شهر)",        sp:"m18"},
-  {id:"MMR2",  label:"MMR جرعة 2 (18 شهر)",            sp:"m18"},
-  {id:"TETRA", label:"TETRA – الرباعي (6 سنوات)",       sp:"y6"},
-  {id:"CBOX2", label:"Chickenpox جرعة 2 (6 سنوات)",    sp:"y6"},
-  {id:"MCV3",  label:"MCV – السحايا (12 سنة)",          sp:"y12"},
-  {id:"HPV1",  label:"HPV جرعة 1 – الورم الحليمي (15 سنة) للبنات",sp:"y15"},
-  {id:"HPV2",  label:"HPV جرعة 2 – بعد 6 أشهر من الأولى",        sp:"y15"},
-  {id:"TDAP",  label:"Tdap – الثلاثي البكتيري (15 سنة)",sp:"y15"},
+var VAX=[
+  {id:"BCG",   label:"BCG - الواقي من الدرن",               sp:"birth"},
+  {id:"OPV1",  label:"OPV - شلل الأطفال (الأول)",           sp:"birth"},
+  {id:"HBV",   label:"HBV - التهاب الكبد الباني",           sp:"birth"},
+  {id:"HEXA1", label:"HEXA جرعة 1 (شهرين)",                 sp:"m2"},
+  {id:"ROTA1", label:"ROTA جرعة 1 - فموي (شهرين)",          sp:"m2"},
+  {id:"PCV1",  label:"PCV جرعة 1 (شهرين)",                  sp:"m2"},
+  {id:"HEXA2", label:"HEXA جرعة 2 (4 أشهر)",                sp:"m4"},
+  {id:"ROTA2", label:"ROTA جرعة 2 - فموي (4 أشهر)",         sp:"m4"},
+  {id:"PCV2",  label:"PCV جرعة 2 (4 أشهر)",                 sp:"m4"},
+  {id:"HEXA3", label:"HEXA جرعة 3 (6 أشهر)",                sp:"m6"},
+  {id:"ROTA3", label:"ROTA جرعة 3 - فموي (6 أشهر)",         sp:"m6"},
+  {id:"MCV1",  label:"MCV - السحايا جرعة 1 (9 أشهر)",       sp:"m9"},
+  {id:"OPV2",  label:"OPV جرعة 2 - فموي (9 أشهر)",          sp:"m9"},
+  {id:"MCV2",  label:"MCV - السحايا جرعة 2 (12 شهر)",       sp:"m12"},
+  {id:"PCV3",  label:"PCV جرعة 3 (12 شهر)",                 sp:"m12"},
+  {id:"MMR1",  label:"MMR جرعة 1 (12 شهر)",                 sp:"m12"},
+  {id:"HAVA",  label:"HAV - التهاب الكبد الألفي (15 شهر)",  sp:"m15"},
+  {id:"CBOX1", label:"Chickenpox جرعة 1 (15 شهر)",          sp:"m15"},
+  {id:"PENTA", label:"PENTA - الخماسي (18 شهر)",            sp:"m18"},
+  {id:"MMR2",  label:"MMR جرعة 2 (18 شهر)",                 sp:"m18"},
+  {id:"TETRA", label:"TETRA - الرباعي (6 سنوات)",           sp:"y6"},
+  {id:"CBOX2", label:"Chickenpox جرعة 2 (6 سنوات)",        sp:"y6"},
+  {id:"MCV3",  label:"MCV - السحايا (12 سنة)",              sp:"y12"},
+  {id:"HPV1",  label:"HPV جرعة 1 - للبنات فقط (15 سنة)",   sp:"y15"},
+  {id:"HPV2",  label:"HPV جرعة 2 - بعد 6 أشهر (15 سنة)",   sp:"y15"},
+  {id:"TDAP",  label:"Tdap - الثلاثي البكتيري (15 سنة)",    sp:"y15"}
 ];
-const SM={birth:0,m2:2,m4:4,m6:6,m9:9,m12:12,m15:15,m18:18,y6:72,y12:144,y15:180};
-const SP_LBL={birth:"عند الولادة",m2:"عمر شهرين",m4:"عمر 4 أشهر",m6:"عمر 6 أشهر",m9:"عمر 9 أشهر",m12:"عمر 12 شهر",m15:"عمر 15 شهر",m18:"عمر 18 شهر",y6:"عمر 6 سنوات",y12:"عمر 12 سنة",y15:"عمر 15 سنة"};
 
-function calcCatchUp(ageM,received,dob){
-  const MAX_INJ=3; // حد أقصى 3 حقن في الجلسة الواحدة
-  const missed=VAX.filter(v=>!received.includes(v.id));
-  const bd=new Date(dob),cutoff=new Date("2023-03-01");
+var SM={birth:0,m2:2,m4:4,m6:6,m9:9,m12:12,m15:15,m18:18,y6:72,y12:144,y15:180};
+var SP_LBL={birth:"عند الولادة",m2:"عمر شهرين",m4:"عمر 4 أشهر",m6:"عمر 6 أشهر",m9:"عمر 9 أشهر",m12:"عمر 12 شهر",m15:"عمر 15 شهر",m18:"عمر 18 شهر",y6:"عمر 6 سنوات",y12:"عمر 12 سنة",y15:"عمر 15 سنة"};
 
-  const elig=missed.filter(v=>{
-    if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3")&&ageM>=8)return false;
-    if(v.id==="BCG"&&ageM>1)return false;
-    if((v.id==="HAVA"||v.id.startsWith("CBOX"))&&bd<cutoff)return false;
-    if(v.sp==="y12"&&ageM<108)return false;
-    if(v.sp==="y15"&&ageM<156)return false;
+var ORAL=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
+var CHAINS={
+  HEXA:["HEXA1","HEXA2","HEXA3"],
+  PCV:["PCV1","PCV2","PCV3"],
+  MCV:["MCV1","MCV2","MCV3"],
+  MMR:["MMR1","MMR2"],
+  ROTA:["ROTA1","ROTA2","ROTA3"],
+  OPV:["OPV1","OPV2"],
+  CBOX:["CBOX1","CBOX2"],
+  HPV:["HPV1","HPV2"]
+};
+var PRIO=["BCG","HBV","MMR1","MMR2","HEXA1","HEXA2","HEXA3","PCV1","PCV2","PCV3","MCV1","MCV2","MCV3","HAVA","CBOX1","CBOX2","PENTA","TETRA","HPV1","HPV2","TDAP","OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
+
+function calcCatchUp(ageM, received, dob) {
+  var MAX_INJ = 3;
+  var missed = VAX.filter(function(v){ return received.indexOf(v.id)===-1; });
+  var bd = new Date(dob);
+  var cutoff = new Date("2023-03-01");
+
+  var elig = missed.filter(function(v){
+    if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3") && ageM>=8) return false;
+    if(v.id==="BCG" && ageM>1) return false;
+    if((v.id==="HAVA"||v.id.indexOf("CBOX")===0) && bd<cutoff) return false;
+    if(v.sp==="y12" && ageM<108) return false;
+    if(v.sp==="y15" && ageM<156) return false;
     return ageM>=SM[v.sp];
   });
 
-  const today=new Date(), visits=[];
-  const oral=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
-  const isOral=id=>oral.includes(id);
-
-  // سلاسل اللقاحات: كل سلسلة لا تُعطى منها إلا جرعة واحدة في الجلسة
-  const chains={
-    HEXA:["HEXA1","HEXA2","HEXA3"],
-    PCV: ["PCV1","PCV2","PCV3"],
-    MCV: ["MCV1","MCV2","MCV3"],
-    MMR: ["MMR1","MMR2"],
-    ROTA:["ROTA1","ROTA2","ROTA3"],
-    OPV: ["OPV1","OPV2"],
-    CBOX:["CBOX1","CBOX2"],
-    HPV: ["HPV1","HPV2"],
-  };
-
-  // استخراج الجرعة الصحيحة من كل سلسلة (الجرعة التالية المستحقة)
-  function nextInChain(chain, givenSoFar){
-    for(const id of chain){
-      if(givenSoFar.includes(id)) continue; // أُعطيت بالفعل
-      if(!elig.find(v=>v.id===id)) continue; // غير مؤهلة
-      return id; // هذه هي الجرعة التالية المستحقة
+  function nextInChain(chain, givenSoFar) {
+    for(var i=0;i<chain.length;i++){
+      var id=chain[i];
+      if(givenSoFar.indexOf(id)!==-1) continue;
+      if(!elig.find(function(v){return v.id===id;})) continue;
+      return id;
     }
     return null;
   }
 
-  // ترتيب الأولوية (لقاحات مفردة غير سلاسل)
-  const PRIO=["BCG","HBV","MMR1","MMR2","HEXA1","HEXA2","HEXA3",
-              "PCV1","PCV2","PCV3","MCV1","MCV2","MCV3",
-              "HAVA","CBOX1","CBOX2","PENTA","TETRA",
-              "HPV1","HPV2","TDAP",
-              "OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
+  var today = new Date();
+  var visits = [];
+  var givenSoFar = received.slice();
+  var visitLabels = ["الأولى","الثانية","الثالثة","الرابعة","الخامسة","السادسة","السابعة","الثامنة","التاسعة","العاشرة"];
 
-  let givenSoFar=[...received]; // تتراكم مع كل زيارة
+  for(var visitNum=1; visitNum<=10; visitNum++){
+    var candidates = [];
+    var usedChains = {};
 
-  for(let visitNum=1; visitNum<=12; visitNum++){
-    // بناء قائمة اللقاحات المتاحة لهذه الزيارة
-    // قاعدة: من كل سلسلة جرعة واحدة فقط في الزيارة
-    const candidates=[];
-    const usedChains=new Set();
+    for(var pi=0; pi<PRIO.length; pi++){
+      var id = PRIO[pi];
+      if(givenSoFar.indexOf(id)!==-1) continue;
+      if(!elig.find(function(v){return v.id===id;})) continue;
 
-    for(const id of PRIO){
-      if(givenSoFar.includes(id)) continue;
-      if(!elig.find(v=>v.id===id)) continue;
-
-      // تحقق من انتماء هذا اللقاح لسلسلة
-      let chain=null, chainKey=null;
-      for(const [key,arr] of Object.entries(chains)){
-        if(arr.includes(id)){chain=arr; chainKey=key; break;}
+      var chainKey = null;
+      var chainArr = null;
+      var ckeys = Object.keys(CHAINS);
+      for(var ci=0;ci<ckeys.length;ci++){
+        if(CHAINS[ckeys[ci]].indexOf(id)!==-1){ chainKey=ckeys[ci]; chainArr=CHAINS[ckeys[ci]]; break; }
       }
 
-      if(chain){
-        if(usedChains.has(chainKey)) continue; // السلسلة مستخدمة في هذه الزيارة
-        // تأكد أن هذه هي الجرعة التالية الصحيحة في السلسلة
-        const next=nextInChain(chain, givenSoFar);
-        if(next!==id) continue;
-        usedChains.add(chainKey);
+      if(chainKey){
+        if(usedChains[chainKey]) continue;
+        var nxt = nextInChain(chainArr, givenSoFar);
+        if(nxt!==id) continue;
+        usedChains[chainKey]=true;
       }
-
       candidates.push(id);
     }
 
     if(candidates.length===0) break;
 
-    // فصل فموي عن حقن
-    const oralNow=candidates.filter(isOral);
-    const injNow=candidates.filter(id=>!isOral(id));
+    var oralNow = candidates.filter(function(id){return ORAL.indexOf(id)!==-1;});
+    var injNow  = candidates.filter(function(id){return ORAL.indexOf(id)===-1;});
+    var takenInj = injNow.slice(0, MAX_INJ);
+    var taken = takenInj.concat(oralNow);
 
-    // حقن: أعلى 3 أولوية فقط؛ فموي: كلها
-    const takenInj=injNow.slice(0,MAX_INJ);
-    const taken=[...takenInj,...oralNow];
-
-    // تاريخ الزيارة
-    const d=new Date(today);
+    var d = new Date(today);
     if(visitNum>1) d.setDate(d.getDate()+(visitNum-1)*14);
 
-    // ملاحظات
-    const notes=[];
+    var notes = [];
     if(visitNum===1){
-      notes.push("لا تعيد السلسلة من البداية – أكمل من حيث توقفت");
+      notes.push("لا تعيد السلسلة من البداية - أكمل من حيث توقفت");
       notes.push("الحد الأقصى 3 حقن في الجلسة الواحدة وفق السياسة الوطنية");
     }
-    if(injNow.length>MAX_INJ)
-      notes.push("جرعات متبقية موزّعة على الزيارات التالية (قاعدة الـ 3 حقن)");
-    if(taken.some(id=>id.startsWith("ROTA")))
-      notes.push("ROTA فموي – لا يُحسب ضمن الـ 3 حقن | لا تُكمل بعد عمر 8 أشهر");
-    if(taken.some(id=>id.startsWith("HPV")))
-      notes.push("HPV للبنات فقط | جرعتان بفاصل 6 أشهر وفق الجدول الوطني الليبي");
-    if(taken.includes("MCV2")&&taken.includes("MCV1"))
-      notes.push("تنبيه: MCV1 وMCV2 لا تُعطيان في نفس الجلسة – تحقق من التسلسل");
+    if(injNow.length>MAX_INJ) notes.push("جرعات متبقية موزعة على الزيارات التالية (قاعدة الـ 3 حقن)");
+    if(taken.some(function(id){return id.indexOf("ROTA")===0;})) notes.push("ROTA فموي - لا يحسب ضمن الـ 3 حقن");
+    if(taken.some(function(id){return id.indexOf("HPV")===0;})) notes.push("HPV للبنات فقط - جرعتان بفاصل 6 أشهر");
 
-    const visitLabels=["الأولى","الثانية","الثالثة","الرابعة","الخامسة","السادسة","السابعة","الثامنة","التاسعة","العاشرة","الحادية عشرة","الثانية عشرة"];
-    const lbl_v=visitNum===1
-      ?`الزيارة الأولى – الآن (${ageM} شهر)`
-      :`الزيارة ${visitLabels[visitNum-1]||visitNum} – بعد ${visitNum-1===1?'أسبوعين':(visitNum-1)+' أسابيع'} على الأقل`;
+    var lbl_v = visitNum===1
+      ? ("الزيارة الأولى - الآن (" + ageM + " شهر)")
+      : ("الزيارة " + (visitLabels[visitNum-1]||visitNum) + " - بعد " + (visitNum===2?"أسبوعين":((visitNum-1)+" أسابيع")) + " على الأقل");
 
-    visits.push({label:lbl_v, dateStr:fmt(d), vaccines:taken, notes});
-    givenSoFar=[...givenSoFar,...taken];
+    visits.push({label:lbl_v, dateStr:fmt(d), vaccines:taken, notes:notes});
+    givenSoFar = givenSoFar.concat(taken);
   }
 
-  const future=[];
-  if(ageM<72)future.push({when:"عمر 6 سنوات",what:"TETRA (DTaP+IPV) + Chickenpox جرعة 2"});
-  if(ageM<144)future.push({when:"عمر 12 سنة",what:"MCV السحايا (للجميع)"});
-  if(ageM<180)future.push({when:"عمر 15 سنة",what:"HPV جرعة 1 (للبنات) + Tdap الثلاثي البكتيري"});
-  return {visits,future,elig,missed};
+  var future = [];
+  if(ageM<72)  future.push({when:"عمر 6 سنوات", what:"TETRA (DTaP+IPV) + Chickenpox جرعة 2"});
+  if(ageM<144) future.push({when:"عمر 12 سنة",  what:"MCV السحايا"});
+  if(ageM<180) future.push({when:"عمر 15 سنة",  what:"HPV (للبنات) + Tdap الثلاثي البكتيري"});
+
+  return {visits:visits, future:future, elig:elig, missed:missed};
 }
 
-function fmt(d){return d.toLocaleDateString('ar-LY',{year:'numeric',month:'long',day:'numeric'});}
-function lbl(id){const v=VAX.find(x=>x.id===id);return v?v.label:id;}
+function fmt(d){ return d.toLocaleDateString("ar-LY",{year:"numeric",month:"long",day:"numeric"}); }
+function lbl(id){ var v=VAX.find(function(x){return x.id===id;}); return v?v.label:id; }
 
-// ── STATE ──────────────────────────────────────────────────────────
-let S={step:1,name:"",dob:"",received:[]};
-function getAgeM(){const bd=new Date(S.dob),now=new Date();return Math.max(0,Math.floor((now-bd)/(1000*60*60*24*30.44)));}
+var S = {step:1, name:"", dob:"", received:[]};
 
-// ── NAV ────────────────────────────────────────────────────────────
+function getAgeM(){
+  var bd=new Date(S.dob), now=new Date();
+  return Math.max(0, Math.floor((now-bd)/(1000*60*60*24*30.44)));
+}
+
 function updateSteps(){
-  const s=S.step;
-  ['d1','d2','d3'].forEach((id,i)=>{const el=document.getElementById(id);el.classList.remove('active','done');if(i+1<s)el.classList.add('done');else if(i+1===s)el.classList.add('active');});
-  ['l1','l2'].forEach((id,i)=>document.getElementById(id).classList.toggle('done',s>i+2));
-  const bb=document.getElementById('btn-back'),bn=document.getElementById('btn-next');
-  bb.disabled=s===1;
-  if(s===3){bn.style.display='none';}else{bn.style.display='';bn.textContent=s===2?'احسب التطعيمات الفائتة ←':'التالي ←';}
+  var s=S.step;
+  ["d1","d2","d3"].forEach(function(id,i){
+    var el=document.getElementById(id);
+    el.className="sdot";
+    if(i+1<s) el.className="sdot done";
+    else if(i+1===s) el.className="sdot active";
+  });
+  ["l1","l2"].forEach(function(id,i){
+    document.getElementById(id).className="sline"+(s>i+2?" done":"");
+  });
+  var bb=document.getElementById("btn-back");
+  var bn=document.getElementById("btn-next");
+  bb.disabled=(s===1);
+  if(s===3){ bn.style.display="none"; }
+  else { bn.style.display=""; bn.textContent=s===2?"احسب التطعيمات الفائتة \u2190":"التالي \u2190"; }
 }
+
 function goNext(){
   if(S.step===1){
-    const n=document.getElementById('inp-name'),d=document.getElementById('inp-dob');
-    if(!n||!n.value.trim()){alert('يرجى إدخال اسم الطفل');return;}
-    if(!d||!d.value){alert('يرجى إدخال تاريخ الميلاد');return;}
-    S.name=n.value.trim();S.dob=d.value;S.step=2;
-  }else if(S.step===2){S.step=3;}
+    var n=document.getElementById("inp-name");
+    var d=document.getElementById("inp-dob");
+    if(!n||!n.value.trim()){ alert("يرجى إدخال اسم الطفل"); return; }
+    if(!d||!d.value){ alert("يرجى إدخال تاريخ الميلاد"); return; }
+    S.name=n.value.trim(); S.dob=d.value; S.step=2;
+  } else if(S.step===2){
+    S.step=3;
+  }
   render();
 }
-function goBack(){if(S.step>1){S.step--;render();}}
-function resetAll(){S={step:1,name:"",dob:"",received:[]};render();}
 
-// ── RENDER ─────────────────────────────────────────────────────────
+function goBack(){ if(S.step>1){ S.step--; render(); } }
+function resetAll(){ S={step:1,name:"",dob:"",received:[]}; render(); }
+
 function render(){
   updateSteps();
-  const c=document.getElementById('main');
-  if(S.step===1)r1(c);else if(S.step===2)r2(c);else r3(c);
+  var c=document.getElementById("main");
+  if(S.step===1) r1(c);
+  else if(S.step===2) r2(c);
+  else r3(c);
 }
 
 function r1(c){
-  const today=new Date().toISOString().split('T')[0];
-  c.innerHTML=`
-  <div class="card">
-    <div class="card-title"><div class="ico">👶</div>بيانات الطفل</div>
-    <div class="inp-row"><label>اسم الطفل</label><input id="inp-name" type="text" placeholder="أدخل اسم الطفل" value="${S.name}"/></div>
-    <div class="row2">
-      <div class="inp-row"><label>تاريخ الميلاد</label><input id="inp-dob" type="date" max="${today}" value="${S.dob}"/></div>
-      <div class="inp-row"><label>الجنس</label><select id="inp-sex"><option value="">غير محدد</option><option value="m">ذكر</option><option value="f">أنثى</option></select></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title"><div class="ico">ℹ️</div>كيف يعمل التطبيق؟</div>
-    <div style="font-size:13px;color:#555;line-height:2">
-      <div>✅ أدخل اسم الطفل وتاريخ ميلاده</div>
-      <div>✅ حدد الطعوم التي أخذها فعلاً</div>
-      <div>✅ سيحسب التطبيق الجرعات الفائتة وجدول اللحاق</div>
-      <div style="margin-top:8px;padding:8px;background:var(--llb);border-radius:8px;font-size:12px;color:var(--db)">يعتمد على سياسة التطعيمات الفائتة 2026 | الحد الأقصى 3 حقن في الجلسة الواحدة | وفق الجدول الوطني الليبي وإرشادات WHO/ACIP</div>
-    </div>
-  </div>`;
+  var today=new Date().toISOString().split("T")[0];
+  c.innerHTML='<div class="card">'
+    +'<div class="card-title"><div class="ico">&#x1F476;</div>بيانات الطفل</div>'
+    +'<div class="inp-row"><label>اسم الطفل</label><input id="inp-name" type="text" placeholder="أدخل اسم الطفل" value="'+S.name+'"/></div>'
+    +'<div class="row2">'
+    +'<div class="inp-row"><label>تاريخ الميلاد</label><input id="inp-dob" type="date" max="'+today+'" value="'+S.dob+'"/></div>'
+    +'<div class="inp-row"><label>الجنس</label><select id="inp-sex"><option value="">غير محدد</option><option value="m">ذكر</option><option value="f">أنثى</option></select></div>'
+    +'</div></div>'
+    +'<div class="card">'
+    +'<div class="card-title"><div class="ico">&#x2139;&#xFE0F;</div>كيف يعمل التطبيق؟</div>'
+    +'<div style="font-size:13px;color:#555;line-height:2">'
+    +'<div>&#x2705; أدخل اسم الطفل وتاريخ ميلاده</div>'
+    +'<div>&#x2705; حدد الطعوم التي أخذها فعلاً</div>'
+    +'<div>&#x2705; سيحسب التطبيق الجرعات الفائتة وجدول اللحاق</div>'
+    +'<div style="margin-top:8px;padding:8px;background:var(--llb);border-radius:8px;font-size:12px;color:var(--db)">سياسة 2026 | الحد الأقصى 3 حقن في الجلسة | وفق الجدول الوطني الليبي وإرشادات WHO</div>'
+    +'</div></div>';
 }
 
 function r2(c){
-  const ageM=getAgeM();
-  const ageLbl=ageM<24?`${ageM} شهر`:ageM<72?`${Math.floor(ageM/12)} سنة و${ageM%12} شهر`:`${Math.floor(ageM/12)} سنة`;
-  const due=VAX.filter(v=>ageM>=SM[v.sp]);
-  const groups={};due.forEach(v=>{if(!groups[v.sp])groups[v.sp]=[];groups[v.sp].push(v);});
-  let html=`<div class="card"><div class="card-title"><div class="ico">✅</div>الطعوم التي أخذها الطفل</div>
-    <p style="font-size:13px;color:#666;margin-bottom:12px">الطفل: <strong style="color:var(--db)">${S.name}</strong> | العمر: <strong style="color:var(--gr)">${ageLbl}</strong></p>
-    <p style="font-size:12px;color:#888;margin-bottom:14px">اضغط على الطعوم التي أخذها الطفل فعلاً ✓</p>`;
-  Object.keys(groups).forEach(sp=>{
-    html+=`<div style="margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:var(--mb);margin-bottom:7px;padding:4px 10px;background:var(--llb);border-radius:6px;display:inline-block">${SP_LBL[sp]||sp}</div><div class="vax-grid">`;
-    groups[sp].forEach(v=>{const chk=S.received.includes(v.id)?'checked':'';html+=`<div class="vax-item ${chk}" onclick="toggleV('${v.id}',this)"><div class="cb">${chk?'<span style="color:#fff;font-size:11px;font-weight:700">✓</span>':''}</div><span>${v.label}</span></div>`;}); 
-    html+=`</div></div>`;
+  var ageM=getAgeM();
+  var ageLbl=ageM<24?(ageM+" شهر"):ageM<72?(Math.floor(ageM/12)+" سنة و"+ageM%12+" شهر"):(Math.floor(ageM/12)+" سنة");
+  var due=VAX.filter(function(v){return ageM>=SM[v.sp];});
+  var groups={};
+  due.forEach(function(v){ if(!groups[v.sp]) groups[v.sp]=[]; groups[v.sp].push(v); });
+
+  var html='<div class="card">'
+    +'<div class="card-title"><div class="ico">&#x2705;</div>الطعوم التي أخذها الطفل</div>'
+    +'<p style="font-size:13px;color:#666;margin-bottom:12px">الطفل: <strong style="color:var(--db)">'+S.name+'</strong> | العمر: <strong style="color:var(--gr)">'+ageLbl+'</strong></p>'
+    +'<p style="font-size:12px;color:#888;margin-bottom:14px">اضغط على الطعوم التي أخذها الطفل فعلاً</p>';
+
+  Object.keys(groups).forEach(function(sp){
+    html+='<div style="margin-bottom:14px">'
+      +'<div style="font-size:12px;font-weight:700;color:var(--mb);margin-bottom:7px;padding:4px 10px;background:var(--llb);border-radius:6px;display:inline-block">'+(SP_LBL[sp]||sp)+'</div>'
+      +'<div class="vax-grid">';
+    groups[sp].forEach(function(v){
+      var chk=S.received.indexOf(v.id)!==-1?"checked":"";
+      html+='<div class="vax-item '+chk+'" onclick="toggleV(\''+v.id+'\',this)">'
+        +'<div class="cb">'+(chk?'<span style="color:#fff;font-size:11px;font-weight:700">&#x2713;</span>':'')+'</div>'
+        +'<span>'+v.label+'</span>'
+        +'</div>';
+    });
+    html+='</div></div>';
   });
-  html+=`<div class="sep"></div><div style="display:flex;gap:10px;margin-top:4px">
-    <button onclick="selAll()" style="flex:1;padding:8px;background:var(--lgr);border:1.5px solid var(--gr);border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;color:var(--gr);cursor:pointer">تحديد الكل</button>
-    <button onclick="clrAll()" style="flex:1;padding:8px;background:var(--lrd);border:1.5px solid #f5b0a0;border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;color:#8b0000;cursor:pointer">مسح الكل</button>
-  </div></div>`;
+
+  html+='<div class="sep"></div>'
+    +'<div style="display:flex;gap:10px;margin-top:4px">'
+    +'<button onclick="selAll()" style="flex:1;padding:8px;background:var(--lgr);border:1.5px solid var(--gr);border-radius:8px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;color:var(--gr);cursor:pointer">تحديد الكل</button>'
+    +'<button onclick="clrAll()" style="flex:1;padding:8px;background:var(--lrd);border:1.5px solid #f5b0a0;border-radius:8px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;color:#8b0000;cursor:pointer">مسح الكل</button>'
+    +'</div></div>';
   c.innerHTML=html;
 }
 
 function toggleV(id,el){
-  el.classList.toggle('checked');const cb=el.querySelector('.cb');
-  if(el.classList.contains('checked')){if(!S.received.includes(id))S.received.push(id);cb.innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">✓</span>';}
-  else{S.received=S.received.filter(x=>x!==id);cb.innerHTML='';}
+  var idx=S.received.indexOf(id);
+  var cb=el.querySelector(".cb");
+  if(el.classList.contains("checked")){
+    el.classList.remove("checked");
+    if(idx!==-1) S.received.splice(idx,1);
+    cb.innerHTML="";
+  } else {
+    el.classList.add("checked");
+    if(idx===-1) S.received.push(id);
+    cb.innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">&#x2713;</span>';
+  }
 }
-function selAll(){document.querySelectorAll('.vax-item').forEach(el=>{const m=el.getAttribute('onclick').match(/'([^']+)'/);if(!m)return;const id=m[1];if(!S.received.includes(id))S.received.push(id);el.classList.add('checked');el.querySelector('.cb').innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">✓</span>';});}
-function clrAll(){S.received=[];document.querySelectorAll('.vax-item').forEach(el=>{el.classList.remove('checked');el.querySelector('.cb').innerHTML=''});}
+
+function selAll(){
+  document.querySelectorAll(".vax-item").forEach(function(el){
+    var m=el.getAttribute("onclick").match(/'([^']+)'/);
+    if(!m) return;
+    var id=m[1];
+    if(S.received.indexOf(id)===-1) S.received.push(id);
+    el.classList.add("checked");
+    el.querySelector(".cb").innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">&#x2713;</span>';
+  });
+}
+
+function clrAll(){
+  S.received=[];
+  document.querySelectorAll(".vax-item").forEach(function(el){
+    el.classList.remove("checked");
+    el.querySelector(".cb").innerHTML="";
+  });
+}
 
 function r3(c){
-  const ageM=getAgeM(),res=calcCatchUp(ageM,S.received,S.dob);
-  if(res.elig.length===0){c.innerHTML=`<div class="complete-card"><div class="big">🎉</div><p>مبروك! ${S.name} أخذ جميع التطعيمات المطلوبة</p></div>${futureSect(res.future)}<button class="btn-reset" onclick="resetAll()">🔄 بحث جديد</button>`;return;}
-  const ageLbl=ageM<24?`${ageM} شهر`:`${Math.floor(ageM/12)} سنة ${ageM%12>0?'و'+ageM%12+' شهر':''}`;
-  let html=`<div class="res-hdr"><h2>جدول التطعيمات الفائتة</h2><p>تم الاحتساب وفق بروتوكول Catch-Up الوطني</p>
-    <div class="tags"><span class="tag">👶 ${S.name}</span><span class="tag">📅 ${ageLbl}</span><span class="tag">💉 ${res.elig.length} جرعة فائتة</span></div></div>`;
-  const injCount=res.elig.filter(v=>!["OPV1","OPV2","ROTA1","ROTA2","ROTA3"].includes(v.id)).length;
-  const visitCount=Math.ceil(injCount/3);
-  if(injCount>3)html+=`<div class="alert-box"><div>⚠️</div><div>يوجد <strong>${injCount} حقنة</strong> فائتة تستلزم <strong>${visitCount} زيارات</strong> تكميلية (قاعدة الحد الأقصى 3 حقن). يُنصح بمراجعة مشرف التطعيمات.</div></div>`;
-  res.visits.forEach((v,i)=>{
-    html+=`<div class="visit-card"><div class="visit-hdr"><div class="visit-num">${i+1}</div><div><div class="visit-title">${v.label}</div><div class="visit-date">📅 ${v.dateStr}</div></div></div>
-    <div class="visit-body"><div style="margin-bottom:8px">${v.vaccines.map(id=>`<span class="vax-pill"><span class="dot"></span>${lbl(id)}</span>`).join('')}</div>
-    ${v.notes&&v.notes.length?`<div class="note-box">${v.notes.map(n=>`<div>• ${n}</div>`).join('')}</div>`:''}</div></div>`;
+  var ageM=getAgeM();
+  var res=calcCatchUp(ageM,S.received,S.dob);
+  var ageLbl=ageM<24?(ageM+" شهر"):(Math.floor(ageM/12)+" سنة"+(ageM%12>0?" و"+ageM%12+" شهر":""));
+
+  if(res.elig.length===0){
+    c.innerHTML='<div class="complete-card"><div class="big">&#x1F389;</div><p>مبروك! '+S.name+' أخذ جميع التطعيمات المطلوبة</p></div>'
+      +futureSect(res.future)
+      +'<button class="btn-reset" onclick="resetAll()">&#x1F504; بحث جديد</button>';
+    return;
+  }
+
+  var injCount=res.elig.filter(function(v){ return ORAL.indexOf(v.id)===-1; }).length;
+  var visitCount=Math.ceil(injCount/3);
+
+  var html='<div class="res-hdr"><h2>جدول التطعيمات الفائتة</h2>'
+    +'<p>تم الاحتساب وفق بروتوكول Catch-Up الوطني 2026</p>'
+    +'<div class="tags">'
+    +'<span class="tag">&#x1F476; '+S.name+'</span>'
+    +'<span class="tag">&#x1F4C5; '+ageLbl+'</span>'
+    +'<span class="tag">&#x1F489; '+res.elig.length+' جرعة فائتة</span>'
+    +'</div></div>';
+
+  if(injCount>3){
+    html+='<div class="alert-box"><div>&#x26A0;&#xFE0F;</div>'
+      +'<div>يوجد <strong>'+injCount+' حقنة</strong> فائتة تستلزم <strong>'+visitCount+' زيارات</strong> (قاعدة الحد الأقصى 3 حقن)</div></div>';
+  }
+
+  res.visits.forEach(function(v,i){
+    html+='<div class="visit-card">'
+      +'<div class="visit-hdr">'
+      +'<div class="visit-num">'+(i+1)+'</div>'
+      +'<div><div class="visit-title">'+v.label+'</div>'
+      +'<div class="visit-date">&#x1F4C5; '+v.dateStr+'</div></div></div>'
+      +'<div class="visit-body">'
+      +'<div style="margin-bottom:8px">'
+      +v.vaccines.map(function(id){
+        return '<span class="vax-pill"><span class="dot"></span>'+lbl(id)+'</span>';
+      }).join("")
+      +'</div>'
+      +(v.notes&&v.notes.length?'<div class="note-box">'+v.notes.map(function(n){return "<div>&bull; "+n+"</div>";}).join("")+'</div>':"")
+      +'</div></div>';
   });
+
   html+=futureSect(res.future);
-  html+=`<div class="card" style="border-right:4px solid var(--mb)"><div class="card-title"><div class="ico">📋</div>قواعد عامة</div>
-    <div style="font-size:12px;color:#444;line-height:2">
-      <div>• لا تعيد السلسلة من البداية مهما طالت المدة</div>
-      <div>• احترم الحد الأدنى للفترات بين الجرعات</div>
-      <div>• ROTA لا تُعطى بعد عمر 8 أشهر (32 أسبوعاً) وفق الجدول الوطني</div>
-      <div>• Hib لا تُحتاج فوق 59 شهراً</div>
-      <div style="color:var(--gr);font-weight:700">• الحد الأقصى 3 حقن في الجلسة الواحدة – الجرعات الزائدة تُوزّع على زيارات تكميلية</div>
-      <div>• الفترة الدنيا بين الزيارات التكميلية: أسبوعان على الأقل</div>
-      <div>• HPV للبنات فقط عند عمر 15 سنة | جرعتان فاصل 6 أشهر</div>
-      <div>• HAV وجديري الماء للمولودين بعد مارس 2023</div>
-    </div></div>
-  <button class="btn-reset" onclick="resetAll()">🔄 بحث جديد لطفل آخر</button>`;
+  html+='<div class="card" style="border-right:4px solid var(--mb)">'
+    +'<div class="card-title"><div class="ico">&#x1F4CB;</div>قواعد عامة</div>'
+    +'<div style="font-size:12px;color:#444;line-height:2">'
+    +'<div>&bull; لا تعيد السلسلة من البداية مهما طالت المدة</div>'
+    +'<div>&bull; ROTA لا تُعطى بعد عمر 8 أشهر وفق الجدول الوطني</div>'
+    +'<div style="color:var(--gr);font-weight:700">&bull; الحد الأقصى 3 حقن في الجلسة - الجرعات الزائدة تُوزع على زيارات تكميلية</div>'
+    +'<div>&bull; الفترة الدنيا بين الزيارات: أسبوعان على الأقل</div>'
+    +'<div>&bull; HPV للبنات فقط عمر 15 سنة | جرعتان فاصل 6 أشهر</div>'
+    +'<div>&bull; جرعة واحدة فقط من كل لقاح في الجلسة الواحدة</div>'
+    +'</div></div>'
+    +'<button class="btn-reset" onclick="resetAll()">&#x1F504; بحث جديد لطفل آخر</button>';
+
   c.innerHTML=html;
 }
+
 function futureSect(f){
-  if(!f||!f.length)return'';
-  return`<div class="card" style="border-right:4px solid var(--gd)"><div class="card-title"><div class="ico">🔮</div>الجرعات المستقبلية</div>
-    ${f.map(x=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f2f8"><div style="background:var(--lgd);border:1px solid var(--gd);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:#7b4a00;white-space:nowrap">${x.when}</div><div style="font-size:12px;color:#333">${x.what}</div></div>`).join('')}</div>`;
+  if(!f||!f.length) return "";
+  var html='<div class="card" style="border-right:4px solid var(--gd)">'
+    +'<div class="card-title"><div class="ico">&#x1F52E;</div>الجرعات المستقبلية</div>';
+  f.forEach(function(x){
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f2f8">'
+      +'<div style="background:var(--lgd);border:1px solid var(--gd);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:#7b4a00;white-space:nowrap">'+x.when+'</div>'
+      +'<div style="font-size:12px;color:#333">'+x.what+'</div></div>';
+  });
+  return html+'</div>';
 }
+
 render();
 </script>
 </body>
