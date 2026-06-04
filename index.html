@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<title>حاسبة التطعيمات الفائتة – ليبيا</title>
+<title>حاسبة التطعيمات الفائتة – ليبيا 2026</title>
 <meta name="description" content="حساب جدول التطعيمات الفائتة للأطفال – المركز الوطني لمكافحة الأمراض"/>
 <meta name="theme-color" content="#1a3a6b"/>
 <meta name="mobile-web-app-capable" content="yes"/>
@@ -146,7 +146,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 <div class="hdr">
   <div class="hdr-inner">
     <div class="hdr-ico">💉</div>
-    <div><h1>حاسبة التطعيمات الفائتة</h1><p>المركز الوطني لمكافحة الأمراض – ليبيا</p></div>
+    <div><h1>حاسبة التطعيمات الفائتة</h1><p>المركز الوطني لمكافحة الأمراض – ليبيا | سياسة 2026</p></div>
   </div>
   <div class="flag"><div class="f1"></div><div class="f2"></div><div class="f3"></div></div>
 </div>
@@ -190,7 +190,7 @@ document.head.appendChild(mLink);
 
 // Inline Service Worker
 const SW_CODE = `
-const C='catchup-v2';
+const C='catchup-v3';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./'])));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
 self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const cl=res.clone();caches.open(C).then(c=>c.put(e.request,cl));return res;})));});
@@ -266,67 +266,126 @@ const VAX=[
   {id:"TETRA", label:"TETRA – الرباعي (6 سنوات)",       sp:"y6"},
   {id:"CBOX2", label:"Chickenpox جرعة 2 (6 سنوات)",    sp:"y6"},
   {id:"MCV3",  label:"MCV – السحايا (12 سنة)",          sp:"y12"},
-  {id:"HPV",   label:"HPV – الورم الحليمي (12 سنة)",    sp:"y12"},
+  {id:"HPV1",  label:"HPV جرعة 1 – الورم الحليمي (15 سنة) للبنات",sp:"y15"},
+  {id:"HPV2",  label:"HPV جرعة 2 – بعد 6 أشهر من الأولى",        sp:"y15"},
   {id:"TDAP",  label:"Tdap – الثلاثي البكتيري (15 سنة)",sp:"y15"},
 ];
 const SM={birth:0,m2:2,m4:4,m6:6,m9:9,m12:12,m15:15,m18:18,y6:72,y12:144,y15:180};
 const SP_LBL={birth:"عند الولادة",m2:"عمر شهرين",m4:"عمر 4 أشهر",m6:"عمر 6 أشهر",m9:"عمر 9 أشهر",m12:"عمر 12 شهر",m15:"عمر 15 شهر",m18:"عمر 18 شهر",y6:"عمر 6 سنوات",y12:"عمر 12 سنة",y15:"عمر 15 سنة"};
 
 function calcCatchUp(ageM,received,dob){
+  const MAX_PER_VISIT=3; // سياسة: حد أقصى 3 حقن في الجلسة الواحدة
   const missed=VAX.filter(v=>!received.includes(v.id));
   const bd=new Date(dob),cutoff=new Date("2023-03-01");
+
+  // تحديد اللقاحات المؤهلة للحصول عليها
   const elig=missed.filter(v=>{
-    if(v.id.startsWith("ROTA")&&ageM>=24)return false;
+    if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3")&&ageM>=8)return false; // ROTA: حد عمري 8 أشهر
     if(v.id==="BCG"&&ageM>1)return false;
     if((v.id==="HAVA"||v.id.startsWith("CBOX"))&&bd<cutoff)return false;
     if(v.sp==="y12"&&ageM<108)return false;
     if(v.sp==="y15"&&ageM<156)return false;
+    // HPV: للبنات فقط (نتحقق لاحقاً حسب الجنس)
     return ageM>=SM[v.sp];
   });
+
   const has=id=>elig.find(v=>v.id===id);
   const today=new Date(),visits=[];
 
-  const v1=[],n1=["أعطِ جميع الجرعات في أقرب فرصة","لا تعيد السلسلة – أكمل من حيث توقفت"];
-  if(has("MMR1"))v1.push("MMR1");
-  if(has("MCV2")&&ageM>=12)v1.push("MCV2");
-  if(has("PCV3")&&ageM>=12)v1.push("PCV3");
-  if(has("HEXA1")){v1.push("HEXA1");n1.push("ابدأ سلسلة HEXA – جرعات تكميلية لاحقة");}
-  else if(has("HEXA2"))v1.push("HEXA2");
-  else if(has("HEXA3"))v1.push("HEXA3");
-  if(has("PCV1")&&!v1.includes("PCV3"))v1.push("PCV1");
-  else if(has("PCV2")&&!v1.includes("PCV3")&&!v1.includes("PCV1"))v1.push("PCV2");
-  if(has("ROTA1")&&ageM<24)v1.push("ROTA1");
-  else if(has("ROTA2")&&ageM<24)v1.push("ROTA2");
-  if(has("MCV1")&&ageM>=9&&!v1.includes("MCV2"))v1.push("MCV1");
-  if(has("OPV1"))v1.push("OPV1");if(has("OPV2"))v1.push("OPV2");if(has("HBV"))v1.push("HBV");
-  if(has("HAVA")&&ageM>=15)v1.push("HAVA");if(has("CBOX1")&&ageM>=15)v1.push("CBOX1");
-  if(has("TETRA")&&ageM>=60)v1.push("TETRA");
-  if(has("MCV3")&&ageM>=144)v1.push("MCV3");if(has("HPV")&&ageM>=144)v1.push("HPV");
-  if(has("TDAP")&&ageM>=156)v1.push("TDAP");
-  if(v1.length){const d=new Date(today);visits.push({label:`الزيارة الأولى – الآن (${ageM} شهر)`,dateStr:fmt(d),vaccines:v1,notes:n1});}
+  // ── تصنيف اللقاحات حسب الأولوية (وفق السياسة الجديدة) ──
+  // الأولوية 1 (أعلى): BCG, HEXA, PCV, MMR
+  // الأولوية 2 (عالية): MCV, HBV, HAVA, IPV/OPV
+  // الأولوية 3 (متوسطة): CBOX, HPV, TDAP, PENTA/TETRA
+  // فموي (لا تُحسب): ROTA, OPV
 
-  const v2=[],n2=[];
-  if(has("MMR2")&&!v1.includes("MMR2")){v2.push("MMR2");n2.push("MMR الثانية بعد 4 أسابيع من الأولى");}
-  if(has("ROTA3")&&ageM<24){v2.push("ROTA3");n2.push("إكمال سلسلة ROTA");}
-  if(v1.includes("HEXA1")&&has("HEXA2"))v2.push("HEXA2");
-  else if(v1.includes("HEXA2")&&has("HEXA3"))v2.push("HEXA3");
-  if(v2.length){const d=new Date(today);d.setDate(d.getDate()+28);visits.push({label:"الزيارة الثانية – بعد 4 أسابيع",dateStr:fmt(d),vaccines:v2,notes:n2});}
+  function prioritize(ids){
+    const oral=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
+    const p1=["BCG","HEXA1","HEXA2","HEXA3","PCV1","PCV2","PCV3","MMR1","MMR2"];
+    const p2=["MCV1","MCV2","MCV3","HBV","HAVA","PENTA"];
+    const p3=["CBOX1","CBOX2","HPV1","HPV2","TDAP","TETRA"];
+    const sort=(a,b)=>{
+      const rank=id=>{
+        if(oral.includes(id))return 0; // فموي: لا يحسب كحقنة
+        if(p1.includes(id))return 1;
+        if(p2.includes(id))return 2;
+        if(p3.includes(id))return 3;
+        return 4;
+      };
+      return rank(a)-rank(b);
+    };
+    return ids.slice().sort(sort);
+  }
 
-  const v3=[],n3=[];
-  if(v1.includes("PCV1")&&has("PCV2")){v3.push("PCV2");n3.push("فاصل 8 أسابيع بين جرعات PCV");}
-  if(v1.includes("HEXA2")&&!v2.includes("HEXA3")&&has("HEXA3"))v3.push("HEXA3");
-  if(has("HAVA")&&!v1.includes("HAVA")&&ageM>=12){v3.push("HAVA");n3.push("HAV مؤهل حسب تاريخ الميلاد");}
-  if(has("CBOX1")&&!v1.includes("CBOX1")&&ageM>=12)v3.push("CBOX1");
-  if(v3.length){const d=new Date(today);d.setDate(d.getDate()+56);visits.push({label:"الزيارة الثالثة – بعد 8 أسابيع",dateStr:fmt(d),vaccines:v3,notes:n3});}
+  // تجميع كل اللقاحات المؤهلة
+  let pool=elig.map(v=>v.id);
 
-  const v4=[],n4=["الجرعة المنشطة – 6 أشهر على الأقل من آخر جرعة أساسية"];
-  if(has("PENTA"))v4.push("PENTA");
-  if(v4.length){const d=new Date(today);d.setMonth(d.getMonth()+6);visits.push({label:"الزيارة الرابعة – بعد 6 أشهر",dateStr:fmt(d),vaccines:v4,notes:n4});}
+  // قواعد تبعية (dependency): لا تُعطي جرعة 2 قبل 1
+  const deps={"HEXA2":"HEXA1","HEXA3":"HEXA2","ROTA2":"ROTA1","ROTA3":"ROTA2",
+               "PCV2":"PCV1","PCV3":"PCV2","MCV2":"MCV1","MMR2":"MMR1",
+               "CBOX2":"CBOX1","HPV2":"HPV1"};
+  // إزالة أي جرعة 2 إذا كانت جرعة 1 لم تُعطَ بعد وغير موجودة في المستلمة
+  pool=pool.filter(id=>{
+    if(deps[id]){
+      const dep=deps[id];
+      const depInReceived=received.includes(dep);
+      const depInPool=pool.includes(dep);
+      if(!depInReceived&&!depInPool)return false; // لا يمكن إعطاؤها
+    }
+    return true;
+  });
+
+  const oral=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
+  const isOral=id=>oral.includes(id);
+
+  // توزيع على زيارات بحد أقصى 3 حقن (الفموية لا تُحسب)
+  let remaining=[...pool];
+  let visitNum=0;
+  const visitOffsets=[0,14,28,56,90,180]; // بالأيام بين كل زيارة
+
+  while(remaining.length>0){
+    visitNum++;
+    const sorted=prioritize(remaining);
+    const thisOral=sorted.filter(isOral);
+    const thisInj=sorted.filter(id=>!isOral(id));
+
+    // أخذ أعلى 3 أولوية من الحقن + جميع الفموية
+    const takenInj=thisInj.slice(0,MAX_PER_VISIT);
+    const takenOral=thisOral;
+    const taken=[...takenInj,...takenOral];
+
+    const d=new Date(today);
+    const offset=visitOffsets[Math.min(visitNum-1,visitOffsets.length-1)];
+    if(visitNum>1) d.setDate(d.getDate()+offset);
+
+    const notes=[];
+    if(visitNum===1){
+      notes.push("لا تعيد السلسلة من البداية – أكمل من حيث توقفت");
+      notes.push("الحد الأقصى 3 حقن في الجلسة الواحدة وفق السياسة الوطنية");
+    }
+    if(takenInj.length===MAX_PER_VISIT&&thisInj.length>MAX_PER_VISIT)
+      notes.push("جرعات متبقية موزّعة على الزيارات التالية (قاعدة الـ 3 حقن)");
+    if(taken.some(id=>id.startsWith("ROTA")))
+      notes.push("ROTA فموي – لا يُحسب ضمن الـ 3 حقن | لا تُكمل بعد عمر 8 أشهر");
+    if(taken.some(id=>id.startsWith("HPV")))
+      notes.push("HPV للبنات فقط | جرعتان بفاصل 6 أشهر وفق الجدول الوطني الليبي");
+    if(taken.includes("MMR2")&&!received.includes("MMR1")&&!pool.slice(0,pool.indexOf("MMR2")).includes("MMR1"))
+      notes.push("MMR2: فاصل 4 أسابيع على الأقل من الجرعة الأولى");
+
+    const lbl_v=visitNum===1?`الزيارة الأولى – الآن (${ageM} شهر)`
+              :visitNum===2?`الزيارة الثانية – بعد أسبوعين على الأقل`
+              :visitNum===3?`الزيارة الثالثة – بعد أسبوعين على الأقل`
+              :`الزيارة ${visitNum} – بعد أسبوعين على الأقل`;
+
+    visits.push({label:lbl_v,dateStr:fmt(d),vaccines:taken,notes});
+    remaining=remaining.filter(id=>!taken.includes(id));
+
+    if(visitNum>10)break; // أمان
+  }
 
   const future=[];
-  if(ageM<72)future.push({when:"عمر 6 سنوات",what:"TETRA (DTaP/IPV) + Chickenpox جرعة 2"});
-  if(ageM<144)future.push({when:"عمر 12 سنة",what:"MCV السحايا + HPV (للبنات)"});
-  if(ageM<180)future.push({when:"عمر 15 سنة",what:"Tdap الثلاثي البكتيري"});
+  if(ageM<72)future.push({when:"عمر 6 سنوات",what:"TETRA (DTaP+IPV) + Chickenpox جرعة 2"});
+  if(ageM<144)future.push({when:"عمر 12 سنة",what:"MCV السحايا (للجميع)"});
+  if(ageM<180)future.push({when:"عمر 15 سنة",what:"HPV جرعة 1 (للبنات) + Tdap الثلاثي البكتيري"});
   return {visits,future,elig,missed};
 }
 function fmt(d){return d.toLocaleDateString('ar-LY',{year:'numeric',month:'long',day:'numeric'});}
@@ -381,7 +440,7 @@ function r1(c){
       <div>✅ أدخل اسم الطفل وتاريخ ميلاده</div>
       <div>✅ حدد الطعوم التي أخذها فعلاً</div>
       <div>✅ سيحسب التطبيق الجرعات الفائتة وجدول اللحاق</div>
-      <div style="margin-top:8px;padding:8px;background:var(--llb);border-radius:8px;font-size:12px;color:var(--db)">يعتمد على بروتوكول Catch-Up الوطني الليبي وإرشادات WHO</div>
+      <div style="margin-top:8px;padding:8px;background:var(--llb);border-radius:8px;font-size:12px;color:var(--db)">يعتمد على سياسة التطعيمات الفائتة 2026 | الحد الأقصى 3 حقن في الجلسة الواحدة | وفق الجدول الوطني الليبي وإرشادات WHO/ACIP</div>
     </div>
   </div>`;
 }
@@ -420,7 +479,9 @@ function r3(c){
   const ageLbl=ageM<24?`${ageM} شهر`:`${Math.floor(ageM/12)} سنة ${ageM%12>0?'و'+ageM%12+' شهر':''}`;
   let html=`<div class="res-hdr"><h2>جدول التطعيمات الفائتة</h2><p>تم الاحتساب وفق بروتوكول Catch-Up الوطني</p>
     <div class="tags"><span class="tag">👶 ${S.name}</span><span class="tag">📅 ${ageLbl}</span><span class="tag">💉 ${res.elig.length} جرعة فائتة</span></div></div>`;
-  if(res.missed.length>8)html+=`<div class="alert-box"><div>⚠️</div><div>يوجد فجوات كبيرة. يُنصح بمراجعة طبيب الأطفال أو مشرف التطعيمات.</div></div>`;
+  const injCount=res.elig.filter(v=>!["OPV1","OPV2","ROTA1","ROTA2","ROTA3"].includes(v.id)).length;
+  const visitCount=Math.ceil(injCount/3);
+  if(injCount>3)html+=`<div class="alert-box"><div>⚠️</div><div>يوجد <strong>${injCount} حقنة</strong> فائتة تستلزم <strong>${visitCount} زيارات</strong> تكميلية (قاعدة الحد الأقصى 3 حقن). يُنصح بمراجعة مشرف التطعيمات.</div></div>`;
   res.visits.forEach((v,i)=>{
     html+=`<div class="visit-card"><div class="visit-hdr"><div class="visit-num">${i+1}</div><div><div class="visit-title">${v.label}</div><div class="visit-date">📅 ${v.dateStr}</div></div></div>
     <div class="visit-body"><div style="margin-bottom:8px">${v.vaccines.map(id=>`<span class="vax-pill"><span class="dot"></span>${lbl(id)}</span>`).join('')}</div>
@@ -431,9 +492,11 @@ function r3(c){
     <div style="font-size:12px;color:#444;line-height:2">
       <div>• لا تعيد السلسلة من البداية مهما طالت المدة</div>
       <div>• احترم الحد الأدنى للفترات بين الجرعات</div>
-      <div>• ROTA لا تُعطى بعد عمر 24 شهراً</div>
+      <div>• ROTA لا تُعطى بعد عمر 8 أشهر (32 أسبوعاً) وفق الجدول الوطني</div>
       <div>• Hib لا تُحتاج فوق 59 شهراً</div>
-      <div>• HPV للبنات فقط عند عمر 12 سنة</div>
+      <div style="color:var(--gr);font-weight:700">• الحد الأقصى 3 حقن في الجلسة الواحدة – الجرعات الزائدة تُوزّع على زيارات تكميلية</div>
+      <div>• الفترة الدنيا بين الزيارات التكميلية: أسبوعان على الأقل</div>
+      <div>• HPV للبنات فقط عند عمر 15 سنة | جرعتان فاصل 6 أشهر</div>
       <div>• HAV وجديري الماء للمولودين بعد مارس 2023</div>
     </div></div>
   <button class="btn-reset" onclick="resetAll()">🔄 بحث جديد لطفل آخر</button>`;
