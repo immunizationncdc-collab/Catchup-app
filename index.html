@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -217,12 +216,12 @@ function calcCatchUp(ageM, received, dob) {
     var taken = takenInj.concat(oralNow);
 
     var d = new Date(today);
-    if(visitNum>1) d.setDate(d.getDate()+(visitNum-1)*14);
+    if(visitNum>1) d.setDate(d.getDate()+(visitNum-1)*30);
 
     var notes = [];
     if(visitNum===1){
       notes.push("لا تعيد السلسلة من البداية - أكمل من حيث توقفت");
-      notes.push("الحد الأقصى 3 حقن في الجلسة الواحدة وفق السياسة الوطنية");
+      notes.push("الحد الأقصى 3 حقن في الجلسة الواحدة | الفترة الدنيا بين الزيارات: شهر على الأقل");
     }
     if(injNow.length>MAX_INJ) notes.push("جرعات متبقية موزعة على الزيارات التالية (قاعدة الـ 3 حقن)");
     if(taken.some(function(id){return id.indexOf("ROTA")===0;})) notes.push("ROTA فموي - لا يحسب ضمن الـ 3 حقن");
@@ -230,7 +229,7 @@ function calcCatchUp(ageM, received, dob) {
 
     var lbl_v = visitNum===1
       ? ("الزيارة الأولى - الآن (" + ageM + " شهر)")
-      : ("الزيارة " + (visitLabels[visitNum-1]||visitNum) + " - بعد " + (visitNum===2?"أسبوعين":((visitNum-1)+" أسابيع")) + " على الأقل");
+      : ("الزيارة " + (visitLabels[visitNum-1]||visitNum) + " - بعد " + (visitNum===2?"شهر":((visitNum-1)+" أشهر")) + " على الأقل");
 
     visits.push({label:lbl_v, dateStr:fmt(d), vaccines:taken, notes:notes});
     givenSoFar = givenSoFar.concat(taken);
@@ -433,7 +432,7 @@ function r3(c){
     +'<div>&bull; لا تعيد السلسلة من البداية مهما طالت المدة</div>'
     +'<div>&bull; ROTA لا تُعطى بعد عمر 8 أشهر وفق الجدول الوطني</div>'
     +'<div style="color:var(--gr);font-weight:700">&bull; الحد الأقصى 3 حقن في الجلسة - الجرعات الزائدة تُوزع على زيارات تكميلية</div>'
-    +'<div>&bull; الفترة الدنيا بين الزيارات: أسبوعان على الأقل</div>'
+    +'<div>&bull; الفترة الدنيا بين الزيارات التكميلية: شهر على الأقل</div>'
     +'<div>&bull; HPV للبنات فقط عمر 15 سنة | جرعتان فاصل 6 أشهر</div>'
     +'<div>&bull; جرعة واحدة فقط من كل لقاح في الجلسة الواحدة</div>'
     +'</div></div>'
