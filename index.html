@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -155,9 +156,36 @@ if ('serviceWorker' in navigator) {
     .catch(function(e) { console.log('SW error', e); });
 }
 
-// ── Install Prompt ───────────────────────────────────────────────
+// ── Install Logic ────────────────────────────────────────────────
 var deferredPrompt = null;
 
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+}
+function isInstalled() {
+  return isStandalone() || localStorage.getItem('pwa_installed') === '1';
+}
+
+function showInstallBanner() {
+  if (isInstalled()) return;
+  var banner = document.getElementById('install-banner');
+  if (banner) banner.style.display = 'flex';
+}
+function hideInstallBanner() {
+  var banner = document.getElementById('install-banner');
+  if (banner) banner.style.display = 'none';
+}
+function showIOSModal() {
+  document.getElementById('ios-modal').style.display = 'flex';
+}
+function closeIOSModal() {
+  document.getElementById('ios-modal').style.display = 'none';
+}
+
+// التقاط حدث التثبيت (Android/Chrome)
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
@@ -165,31 +193,13 @@ window.addEventListener('beforeinstallprompt', function(e) {
 });
 
 window.addEventListener('appinstalled', function() {
-  hideInstallBanner();
   localStorage.setItem('pwa_installed', '1');
+  hideInstallBanner();
 });
-
-function isStandalone() {
-  return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-}
-
-function isIOS() {
-  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-}
-
-function showInstallBanner() {
-  if (isStandalone() || localStorage.getItem('pwa_installed')) return;
-  var banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'flex';
-}
-
-function hideInstallBanner() {
-  var banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'none';
-}
 
 function doInstall() {
   if (deferredPrompt) {
+    // Android Chrome: حوار تثبيت رسمي
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(function(r) {
       if (r.outcome === 'accepted') {
@@ -199,29 +209,21 @@ function doInstall() {
       deferredPrompt = null;
     });
   } else if (isIOS()) {
+    // iOS: تعليمات Safari
     showIOSModal();
   } else {
-    alert('لتثبيت التطبيق: اضغط قائمة المتصفح ثم اختر إضافة إلى الشاشة الرئيسية');
-    hideInstallBanner();
+    // Fallback: تعليمات يدوية
+    showIOSModal(); // نعرض نفس المودال بتعليمات عامة
   }
 }
 
-function showIOSModal() {
-  document.getElementById('ios-modal').style.display = 'flex';
-}
-
-function closeIOSModal() {
-  document.getElementById('ios-modal').style.display = 'none';
-}
-
-// عرض Banner عند التحميل
+// ظهور البانر عند التحميل
 window.addEventListener('load', function() {
-  if (!isStandalone() && !localStorage.getItem('pwa_installed')) {
-    if (isIOS()) {
-      setTimeout(showInstallBanner, 1500);
+  setTimeout(function() {
+    if (!isInstalled()) {
+      showInstallBanner();
     }
-    // Android: يظهر تلقائياً عند beforeinstallprompt
-  }
+  }, 800);
 });
 
 var VAX=[
