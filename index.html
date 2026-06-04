@@ -274,112 +274,117 @@ const SM={birth:0,m2:2,m4:4,m6:6,m9:9,m12:12,m15:15,m18:18,y6:72,y12:144,y15:180
 const SP_LBL={birth:"عند الولادة",m2:"عمر شهرين",m4:"عمر 4 أشهر",m6:"عمر 6 أشهر",m9:"عمر 9 أشهر",m12:"عمر 12 شهر",m15:"عمر 15 شهر",m18:"عمر 18 شهر",y6:"عمر 6 سنوات",y12:"عمر 12 سنة",y15:"عمر 15 سنة"};
 
 function calcCatchUp(ageM,received,dob){
-  const MAX_PER_VISIT=3; // سياسة: حد أقصى 3 حقن في الجلسة الواحدة
+  const MAX_INJ=3; // حد أقصى 3 حقن في الجلسة الواحدة
   const missed=VAX.filter(v=>!received.includes(v.id));
   const bd=new Date(dob),cutoff=new Date("2023-03-01");
 
-  // تحديد اللقاحات المؤهلة للحصول عليها
   const elig=missed.filter(v=>{
-    if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3")&&ageM>=8)return false; // ROTA: حد عمري 8 أشهر
+    if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3")&&ageM>=8)return false;
     if(v.id==="BCG"&&ageM>1)return false;
     if((v.id==="HAVA"||v.id.startsWith("CBOX"))&&bd<cutoff)return false;
     if(v.sp==="y12"&&ageM<108)return false;
     if(v.sp==="y15"&&ageM<156)return false;
-    // HPV: للبنات فقط (نتحقق لاحقاً حسب الجنس)
     return ageM>=SM[v.sp];
   });
 
-  const has=id=>elig.find(v=>v.id===id);
-  const today=new Date(),visits=[];
-
-  // ── تصنيف اللقاحات حسب الأولوية (وفق السياسة الجديدة) ──
-  // الأولوية 1 (أعلى): BCG, HEXA, PCV, MMR
-  // الأولوية 2 (عالية): MCV, HBV, HAVA, IPV/OPV
-  // الأولوية 3 (متوسطة): CBOX, HPV, TDAP, PENTA/TETRA
-  // فموي (لا تُحسب): ROTA, OPV
-
-  function prioritize(ids){
-    const oral=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
-    const p1=["BCG","HEXA1","HEXA2","HEXA3","PCV1","PCV2","PCV3","MMR1","MMR2"];
-    const p2=["MCV1","MCV2","MCV3","HBV","HAVA","PENTA"];
-    const p3=["CBOX1","CBOX2","HPV1","HPV2","TDAP","TETRA"];
-    const sort=(a,b)=>{
-      const rank=id=>{
-        if(oral.includes(id))return 0; // فموي: لا يحسب كحقنة
-        if(p1.includes(id))return 1;
-        if(p2.includes(id))return 2;
-        if(p3.includes(id))return 3;
-        return 4;
-      };
-      return rank(a)-rank(b);
-    };
-    return ids.slice().sort(sort);
-  }
-
-  // تجميع كل اللقاحات المؤهلة
-  let pool=elig.map(v=>v.id);
-
-  // قواعد تبعية (dependency): لا تُعطي جرعة 2 قبل 1
-  const deps={"HEXA2":"HEXA1","HEXA3":"HEXA2","ROTA2":"ROTA1","ROTA3":"ROTA2",
-               "PCV2":"PCV1","PCV3":"PCV2","MCV2":"MCV1","MMR2":"MMR1",
-               "CBOX2":"CBOX1","HPV2":"HPV1"};
-  // إزالة أي جرعة 2 إذا كانت جرعة 1 لم تُعطَ بعد وغير موجودة في المستلمة
-  pool=pool.filter(id=>{
-    if(deps[id]){
-      const dep=deps[id];
-      const depInReceived=received.includes(dep);
-      const depInPool=pool.includes(dep);
-      if(!depInReceived&&!depInPool)return false; // لا يمكن إعطاؤها
-    }
-    return true;
-  });
-
+  const today=new Date(), visits=[];
   const oral=["OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
   const isOral=id=>oral.includes(id);
 
-  // توزيع على زيارات بحد أقصى 3 حقن (الفموية لا تُحسب)
-  let remaining=[...pool];
-  let visitNum=0;
-  const visitOffsets=[0,14,28,56,90,180]; // بالأيام بين كل زيارة
+  // سلاسل اللقاحات: كل سلسلة لا تُعطى منها إلا جرعة واحدة في الجلسة
+  const chains={
+    HEXA:["HEXA1","HEXA2","HEXA3"],
+    PCV: ["PCV1","PCV2","PCV3"],
+    MCV: ["MCV1","MCV2","MCV3"],
+    MMR: ["MMR1","MMR2"],
+    ROTA:["ROTA1","ROTA2","ROTA3"],
+    OPV: ["OPV1","OPV2"],
+    CBOX:["CBOX1","CBOX2"],
+    HPV: ["HPV1","HPV2"],
+  };
 
-  while(remaining.length>0){
-    visitNum++;
-    const sorted=prioritize(remaining);
-    const thisOral=sorted.filter(isOral);
-    const thisInj=sorted.filter(id=>!isOral(id));
+  // استخراج الجرعة الصحيحة من كل سلسلة (الجرعة التالية المستحقة)
+  function nextInChain(chain, givenSoFar){
+    for(const id of chain){
+      if(givenSoFar.includes(id)) continue; // أُعطيت بالفعل
+      if(!elig.find(v=>v.id===id)) continue; // غير مؤهلة
+      return id; // هذه هي الجرعة التالية المستحقة
+    }
+    return null;
+  }
 
-    // أخذ أعلى 3 أولوية من الحقن + جميع الفموية
-    const takenInj=thisInj.slice(0,MAX_PER_VISIT);
-    const takenOral=thisOral;
-    const taken=[...takenInj,...takenOral];
+  // ترتيب الأولوية (لقاحات مفردة غير سلاسل)
+  const PRIO=["BCG","HBV","MMR1","MMR2","HEXA1","HEXA2","HEXA3",
+              "PCV1","PCV2","PCV3","MCV1","MCV2","MCV3",
+              "HAVA","CBOX1","CBOX2","PENTA","TETRA",
+              "HPV1","HPV2","TDAP",
+              "OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
 
+  let givenSoFar=[...received]; // تتراكم مع كل زيارة
+
+  for(let visitNum=1; visitNum<=12; visitNum++){
+    // بناء قائمة اللقاحات المتاحة لهذه الزيارة
+    // قاعدة: من كل سلسلة جرعة واحدة فقط في الزيارة
+    const candidates=[];
+    const usedChains=new Set();
+
+    for(const id of PRIO){
+      if(givenSoFar.includes(id)) continue;
+      if(!elig.find(v=>v.id===id)) continue;
+
+      // تحقق من انتماء هذا اللقاح لسلسلة
+      let chain=null, chainKey=null;
+      for(const [key,arr] of Object.entries(chains)){
+        if(arr.includes(id)){chain=arr; chainKey=key; break;}
+      }
+
+      if(chain){
+        if(usedChains.has(chainKey)) continue; // السلسلة مستخدمة في هذه الزيارة
+        // تأكد أن هذه هي الجرعة التالية الصحيحة في السلسلة
+        const next=nextInChain(chain, givenSoFar);
+        if(next!==id) continue;
+        usedChains.add(chainKey);
+      }
+
+      candidates.push(id);
+    }
+
+    if(candidates.length===0) break;
+
+    // فصل فموي عن حقن
+    const oralNow=candidates.filter(isOral);
+    const injNow=candidates.filter(id=>!isOral(id));
+
+    // حقن: أعلى 3 أولوية فقط؛ فموي: كلها
+    const takenInj=injNow.slice(0,MAX_INJ);
+    const taken=[...takenInj,...oralNow];
+
+    // تاريخ الزيارة
     const d=new Date(today);
-    const offset=visitOffsets[Math.min(visitNum-1,visitOffsets.length-1)];
-    if(visitNum>1) d.setDate(d.getDate()+offset);
+    if(visitNum>1) d.setDate(d.getDate()+(visitNum-1)*14);
 
+    // ملاحظات
     const notes=[];
     if(visitNum===1){
       notes.push("لا تعيد السلسلة من البداية – أكمل من حيث توقفت");
       notes.push("الحد الأقصى 3 حقن في الجلسة الواحدة وفق السياسة الوطنية");
     }
-    if(takenInj.length===MAX_PER_VISIT&&thisInj.length>MAX_PER_VISIT)
+    if(injNow.length>MAX_INJ)
       notes.push("جرعات متبقية موزّعة على الزيارات التالية (قاعدة الـ 3 حقن)");
     if(taken.some(id=>id.startsWith("ROTA")))
       notes.push("ROTA فموي – لا يُحسب ضمن الـ 3 حقن | لا تُكمل بعد عمر 8 أشهر");
     if(taken.some(id=>id.startsWith("HPV")))
       notes.push("HPV للبنات فقط | جرعتان بفاصل 6 أشهر وفق الجدول الوطني الليبي");
-    if(taken.includes("MMR2")&&!received.includes("MMR1")&&!pool.slice(0,pool.indexOf("MMR2")).includes("MMR1"))
-      notes.push("MMR2: فاصل 4 أسابيع على الأقل من الجرعة الأولى");
+    if(taken.includes("MCV2")&&taken.includes("MCV1"))
+      notes.push("تنبيه: MCV1 وMCV2 لا تُعطيان في نفس الجلسة – تحقق من التسلسل");
 
-    const lbl_v=visitNum===1?`الزيارة الأولى – الآن (${ageM} شهر)`
-              :visitNum===2?`الزيارة الثانية – بعد أسبوعين على الأقل`
-              :visitNum===3?`الزيارة الثالثة – بعد أسبوعين على الأقل`
-              :`الزيارة ${visitNum} – بعد أسبوعين على الأقل`;
+    const visitLabels=["الأولى","الثانية","الثالثة","الرابعة","الخامسة","السادسة","السابعة","الثامنة","التاسعة","العاشرة","الحادية عشرة","الثانية عشرة"];
+    const lbl_v=visitNum===1
+      ?`الزيارة الأولى – الآن (${ageM} شهر)`
+      :`الزيارة ${visitLabels[visitNum-1]||visitNum} – بعد ${visitNum-1===1?'أسبوعين':(visitNum-1)+' أسابيع'} على الأقل`;
 
-    visits.push({label:lbl_v,dateStr:fmt(d),vaccines:taken,notes});
-    remaining=remaining.filter(id=>!taken.includes(id));
-
-    if(visitNum>10)break; // أمان
+    visits.push({label:lbl_v, dateStr:fmt(d), vaccines:taken, notes});
+    givenSoFar=[...givenSoFar,...taken];
   }
 
   const future=[];
@@ -388,6 +393,7 @@ function calcCatchUp(ageM,received,dob){
   if(ageM<180)future.push({when:"عمر 15 سنة",what:"HPV جرعة 1 (للبنات) + Tdap الثلاثي البكتيري"});
   return {visits,future,elig,missed};
 }
+
 function fmt(d){return d.toLocaleDateString('ar-LY',{year:'numeric',month:'long',day:'numeric'});}
 function lbl(id){const v=VAX.find(x=>x.id===id);return v?v.label:id;}
 
