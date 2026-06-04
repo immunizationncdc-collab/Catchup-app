@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<title>حاسبة التطعيمات الفائتة – ليبيا 2026</title>
+<title>حاسبة التطعيمات الفائتة – ليبيا 2026 v5</title>
 <meta name="description" content="حساب جدول التطعيمات الفائتة للأطفال – المركز الوطني لمكافحة الأمراض"/>
 <meta name="theme-color" content="#1a3a6b"/>
 <meta name="mobile-web-app-capable" content="yes"/>
@@ -172,6 +173,24 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 <script>
 // ── PWA ─────────────────────────────────────────────────────────────
 
+// !! أولاً: امسح أي Service Worker قديم فوراً لضمان تحميل النسخة الجديدة
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(function(registrations){
+    for(var r of registrations){
+      r.unregister();
+      console.log('SW مسح:',r.scope);
+    }
+  });
+}
+// امسح الكاش القديم
+if('caches' in window){
+  caches.keys().then(function(keys){
+    keys.forEach(function(key){
+      if(key!=='catchup-v5') caches.delete(key);
+    });
+  });
+}
+
 // 1) manifest عبر data: URI (يقبله Chrome بخلاف blob:)
 (function(){
   var m={
@@ -200,7 +219,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 // 2) Service Worker عبر ملف مؤقت (Blob — fallback آمن للـ SW)
 if('serviceWorker' in navigator){
   var swCode=[
-    "const C='catchup-v4';",
+    "const C='catchup-v5';",
     "self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./'])));self.skipWaiting();});",
     "self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});",
     "self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)));});"
