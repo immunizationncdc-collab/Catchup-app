@@ -313,16 +313,32 @@ var CHAINS={
 };
 var PRIO=["BCG","HBV","MMR1","MMR2","HEXA1","HEXA2","HEXA3","PCV1","PCV2","PCV3","MCV1","MCV2","MCV3","HAVA","CBOX1","CBOX2","PENTA","TETRA","HPV1","HPV2","TDAP","OPV1","OPV2","ROTA1","ROTA2","ROTA3"];
 
+// لقاحات التركيبة المشتركة المبنية على نواة DTaP (ثلاثي/رباعي/خماسي/سداسي)
+// لا يُعطى أكثر من واحد منها في نفس الجلسة لتشابه تركيبتها
+var COMBO_FAMILY={ HEXA1:"COMBO", HEXA2:"COMBO", HEXA3:"COMBO", PENTA:"COMBO", TETRA:"COMBO" };
+
 function calcCatchUp(ageM, received, dob) {
   var MAX_INJ = 3;
-  var missed = VAX.filter(function(v){ return received.indexOf(v.id)===-1; });
   var bd = new Date(dob);
   var cutoff = new Date("2023-03-01");
+
+  // مواليد ديسمبر 2021: فئة خاصة تُضاف لإعادة جدولة الجديري المائي والكبدي A
+  // حتى لو كانوا قبل تاريخ إدخال هذين اللقاحين للجدول الوطني
+  var isDec2021Cohort = (bd.getFullYear()===2021 && bd.getMonth()===11);
+
+  // قاعدة السحائي عند إعادة الجدولة: إذا لم يأخذ الطفل أي جرعة قبل إتمام السنة،
+  // تُعطى جرعة واحدة فقط بعد السنة ولا حاجة لجرعة ثانية (الجدول الروتيني نفسه يبقى جرعتين 9 و12 شهر)
+  var mcvCatchUpSingle = (ageM>=12 && received.indexOf("MCV1")===-1 && received.indexOf("MCV2")===-1);
+
+  var missed = VAX.filter(function(v){
+    if(mcvCatchUpSingle && v.id==="MCV2") return false;
+    return received.indexOf(v.id)===-1;
+  });
 
   var elig = missed.filter(function(v){
     if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3") && ageM>=8) return false;
     if(v.id==="BCG" && ageM>1) return false;
-    if((v.id==="HAVA"||v.id.indexOf("CBOX")===0) && bd<cutoff) return false;
+    if((v.id==="HAVA"||v.id.indexOf("CBOX")===0) && bd<cutoff && !isDec2021Cohort) return false;
     if(v.sp==="y12" && ageM<108) return false;
     if(v.sp==="y15" && ageM<156) return false;
     return ageM>=SM[v.sp];
@@ -346,6 +362,8 @@ function calcCatchUp(ageM, received, dob) {
   for(var visitNum=1; visitNum<=10; visitNum++){
     var candidates = [];
     var usedChains = {};
+    var usedComboFamily = false;
+    var comboDeferred = false;
 
     for(var pi=0; pi<PRIO.length; pi++){
       var id = PRIO[pi];
@@ -365,6 +383,13 @@ function calcCatchUp(ageM, received, dob) {
         if(nxt!==id) continue;
         usedChains[chainKey]=true;
       }
+
+      // لا يُعطى أكثر من لقاح تركيبة مشترك واحد (Hexa/Penta/Tetra) في نفس الجلسة
+      if(COMBO_FAMILY[id]){
+        if(usedComboFamily){ comboDeferred = true; continue; }
+        usedComboFamily = true;
+      }
+
       candidates.push(id);
     }
 
@@ -386,6 +411,9 @@ function calcCatchUp(ageM, received, dob) {
     if(injNow.length>MAX_INJ) notes.push("جرعات متبقية موزعة على الزيارات التالية (قاعدة الـ 3 حقن)");
     if(taken.some(function(id){return id.indexOf("ROTA")===0;})) notes.push("ROTA فموي - لا يحسب ضمن الـ 3 حقن");
     if(taken.some(function(id){return id.indexOf("HPV")===0;})) notes.push("HPV للبنات فقط - جرعتان بفاصل 6 أشهر");
+    if(taken.indexOf("MCV1")!==-1 && mcvCatchUpSingle) notes.push("السحائي: جرعة واحدة فقط كافية عند إعادة الجدولة بعد السنة (لم تُعطَ جرعة قبلها) - لا حاجة لجرعة ثانية");
+    if(isDec2021Cohort && taken.some(function(id){return id==="HAVA"||id.indexOf("CBOX")===0;})) notes.push("مواليد ديسمبر 2021: مُضافون لإعادة جدولة الجديري المائي والكبدي A ضمن هذه الفئة الخاصة");
+    if(comboDeferred) notes.push("لقاحات التركيبة المشتركة (خماسي/رباعي/سداسي) لا تُعطى معاً لتشابه تركيبتها - يُعطى واحد فقط هنا وتُؤجَّل البقية لزيارة لاحقة");
 
     var lbl_v = visitNum===1
       ? ("الزيارة الأولى - الآن (" + ageM + " شهر)")
@@ -595,6 +623,9 @@ function r3(c){
     +'<div>&bull; الفترة الدنيا بين الزيارات التكميلية: شهر على الأقل</div>'
     +'<div>&bull; HPV للبنات فقط عمر 15 سنة | جرعتان فاصل 6 أشهر</div>'
     +'<div>&bull; جرعة واحدة فقط من كل لقاح في الجلسة الواحدة</div>'
+    +'<div>&bull; لا تُعطى لقاحات التركيبة المشتركة (ثلاثي/رباعي/خماسي/سداسي) معاً في نفس الجلسة لتشابه تركيبتها</div>'
+    +'<div>&bull; السحائي: جرعتان روتينياً (9 و12 شهر)؛ أما عند إعادة الجدولة بعد السنة دون جرعة سابقة فتكفي جرعة واحدة</div>'
+    +'<div>&bull; مواليد ديسمبر 2021: يُضافون لإعادة جدولة الجديري المائي والكبدي A</div>'
     +'</div></div>'
     +'<button class="btn-reset" onclick="resetAll()">&#x1F504; بحث جديد لطفل آخر</button>';
 
