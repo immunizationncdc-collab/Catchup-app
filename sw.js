@@ -1,4 +1,4 @@
-const CACHE = 'catchup-v7';
+const CACHE = 'catchup-v8';
 const FILES = [
   './',
   './index.html',
