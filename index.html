@@ -27,6 +27,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 .hdr-ico{width:52px;height:52px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
 .hdr h1{font-size:17px;font-weight:900;color:#fff}
 .hdr p{font-size:11px;color:rgba(255,255,255,.8);margin-top:2px}
+.hdr-credit{font-size:9px;color:rgba(255,255,255,.6);margin-top:1px}
 .flag{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:10px}
 .flag div{flex:1}
 .f1{background:#d4000d}.f2{background:#000}.f3{background:#006233}
@@ -85,10 +86,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:#1a1a2e;min-heigh
 
 <div class="hdr">
   <div class="hdr-inner">
-    <div class="hdr-ico">💉</div>
+    <div class="hdr-ico" id="hdr-ico"><img src="icons/ncdc-logo.png" alt="شعار المركز الوطني لمكافحة الأمراض" style="width:100%;height:100%;object-fit:contain;border-radius:50%" onerror="this.parentElement.textContent='💉';this.parentElement.style.fontSize='26px';"/></div>
     <div>
       <h1>حاسبة التطعيمات الفائتة</h1>
       <p>المركز الوطني لمكافحة الأمراض - ليبيا | سياسة 2026</p>
+      <p class="hdr-credit">إعداد: د. محمد الجرنازي</p>
     </div>
   </div>
   <div class="flag"><div class="f1"></div><div class="f2"></div><div class="f3"></div></div>
