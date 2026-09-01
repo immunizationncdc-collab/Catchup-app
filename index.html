@@ -322,9 +322,10 @@ function calcCatchUp(ageM, received, dob) {
   var bd = new Date(dob);
   var cutoff = new Date("2023-03-01");
 
-  // مواليد ديسمبر 2021: فئة خاصة تُضاف لإعادة جدولة الجديري المائي والكبدي A
-  // حتى لو كانوا قبل تاريخ إدخال هذين اللقاحين للجدول الوطني
-  var isDec2021Cohort = (bd.getFullYear()===2021 && bd.getMonth()===11);
+  // مواليد ديسمبر 2021 فما فوق (أي كل مواليد 2022 وما بعدها أيضاً): فئة تُضاف لإعادة جدولة
+  // الجديري المائي والكبدي A إذا لم يأخذاها، حتى لو كانوا قبل التاريخ الرسمي لدخول اللقاحين للجدول الوطني
+  var havaCboxEligibleFrom = new Date("2021-12-01");
+  var isExpandedCohort = (bd>=havaCboxEligibleFrom && bd<cutoff);
 
   // قاعدة السحائي عند إعادة الجدولة: إذا لم يأخذ الطفل أي جرعة قبل إتمام السنة،
   // تُعطى جرعة واحدة فقط بعد السنة ولا حاجة لجرعة ثانية (الجدول الروتيني نفسه يبقى جرعتين 9 و12 شهر)
@@ -338,7 +339,7 @@ function calcCatchUp(ageM, received, dob) {
   var elig = missed.filter(function(v){
     if((v.id==="ROTA1"||v.id==="ROTA2"||v.id==="ROTA3") && ageM>=8) return false;
     if(v.id==="BCG" && ageM>1) return false;
-    if((v.id==="HAVA"||v.id.indexOf("CBOX")===0) && bd<cutoff && !isDec2021Cohort) return false;
+    if((v.id==="HAVA"||v.id.indexOf("CBOX")===0) && bd<havaCboxEligibleFrom) return false;
     if(v.sp==="y12" && ageM<108) return false;
     if(v.sp==="y15" && ageM<156) return false;
     return ageM>=SM[v.sp];
@@ -412,7 +413,7 @@ function calcCatchUp(ageM, received, dob) {
     if(taken.some(function(id){return id.indexOf("ROTA")===0;})) notes.push("ROTA فموي - لا يحسب ضمن الـ 3 حقن");
     if(taken.some(function(id){return id.indexOf("HPV")===0;})) notes.push("HPV للبنات فقط - جرعتان بفاصل 6 أشهر");
     if(taken.indexOf("MCV1")!==-1 && mcvCatchUpSingle) notes.push("السحائي: جرعة واحدة فقط كافية عند إعادة الجدولة بعد السنة (لم تُعطَ جرعة قبلها) - لا حاجة لجرعة ثانية");
-    if(isDec2021Cohort && taken.some(function(id){return id==="HAVA"||id.indexOf("CBOX")===0;})) notes.push("مواليد ديسمبر 2021: مُضافون لإعادة جدولة الجديري المائي والكبدي A ضمن هذه الفئة الخاصة");
+    if(isExpandedCohort && taken.some(function(id){return id==="HAVA"||id.indexOf("CBOX")===0;})) notes.push("مواليد ديسمبر 2021 فما فوق: مُضافون لإعادة جدولة الجديري المائي والكبدي A ضمن هذه الفئة");
     if(comboDeferred) notes.push("لقاحات التركيبة المشتركة (خماسي/رباعي/سداسي) لا تُعطى معاً لتشابه تركيبتها - يُعطى واحد فقط هنا وتُؤجَّل البقية لزيارة لاحقة");
 
     var lbl_v = visitNum===1
@@ -625,7 +626,7 @@ function r3(c){
     +'<div>&bull; جرعة واحدة فقط من كل لقاح في الجلسة الواحدة</div>'
     +'<div>&bull; لا تُعطى لقاحات التركيبة المشتركة (ثلاثي/رباعي/خماسي/سداسي) معاً في نفس الجلسة لتشابه تركيبتها</div>'
     +'<div>&bull; السحائي: جرعتان روتينياً (9 و12 شهر)؛ أما عند إعادة الجدولة بعد السنة دون جرعة سابقة فتكفي جرعة واحدة</div>'
-    +'<div>&bull; مواليد ديسمبر 2021: يُضافون لإعادة جدولة الجديري المائي والكبدي A</div>'
+    +'<div>&bull; مواليد ديسمبر 2021 فما فوق: يُضافون لإعادة جدولة الجديري المائي والكبدي A إذا لم يأخذاها</div>'
     +'</div></div>'
     +'<button class="btn-reset" onclick="resetAll()">&#x1F504; بحث جديد لطفل آخر</button>';
 
