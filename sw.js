@@ -1,4 +1,4 @@
-const CACHE = 'catchup-v10';
+const CACHE = 'catchup-v11';
 const FILES = [
   './',
   './index.html',
@@ -6,9 +6,9 @@ const FILES = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-192.png',
-  './icons/icon-maskable-512.png'
-  // ملاحظة: أضف './icons/ncdc-logo.png' هنا بعد ما ترفع الشعار الفعلي للمستودع
-  // (cache.addAll تفشل بالكامل لو أي ملف بالقائمة مفقود)
+  './icons/icon-maskable-512.png',
+  './icons/ncdc-logo.png',
+  './icons/ncdc-logo-full.png'
 ];
 
 self.addEventListener('install', event => {
